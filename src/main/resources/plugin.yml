@@ -3,3 +3,10 @@ version: '1.0.0-BETA'
 main: cz.tallonscz.upgradablespawner.Upgradablespawner
 api-version: '1.21'
 authors: [ TallonsCZ ]
+
+commands:
+  UpgradeSpawner:
+    usage: "/UpgradeSpawner"
+    permission: upgradespawner.command.use
+    aliases: "/us"
+    description: "Main command for this plugin"

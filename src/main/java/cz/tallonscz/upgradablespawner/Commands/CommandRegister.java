@@ -12,7 +12,7 @@ public class CommandRegister {
     public CommandRegister(){
         Upgradablespawner plugin = Upgradablespawner.CLASSINSTANCE;
 
-        //plugin.getCommand("").setExecutor();
+        plugin.getCommand("UpgradeSpawner").setExecutor(new GlobalCommand());
     }
 
 }

@@ -15,7 +15,6 @@ public final class Upgradablespawner extends JavaPlugin {
 
         //Registering commands
         CommandRegister commandRegister = new CommandRegister();
-        //getCommand("command").setExecutor(());
 
         //getServer().getPluginManager().registerEvents();
     }
