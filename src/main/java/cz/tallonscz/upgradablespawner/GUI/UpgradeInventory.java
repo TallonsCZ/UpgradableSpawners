@@ -7,7 +7,7 @@ public class UpgradeInventory {
 
     private Inventory inventory;
 
-    private UpgradeInventory(){
+    public UpgradeInventory(){
 
     }
 
