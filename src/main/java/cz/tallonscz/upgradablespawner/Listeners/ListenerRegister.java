@@ -9,7 +9,8 @@ public class ListenerRegister {
     public ListenerRegister(){
         Plugin plugin = Upgradablespawner.INSTANCE;
         PluginManager pluginManager = Upgradablespawner.INSTANCE.getServer().getPluginManager();
-
+        pluginManager.registerEvents(new BreakSpawnerEvent(), plugin);
+        pluginManager.registerEvents(new PlaceSpawnerEvent(), plugin);
         //pluginManager.registerEvents();
     }
 }

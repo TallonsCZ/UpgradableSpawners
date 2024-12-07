@@ -1,6 +1,7 @@
 package cz.tallonscz.upgradablespawner;
 
 import cz.tallonscz.upgradablespawner.Commands.CommandRegister;
+import cz.tallonscz.upgradablespawner.Listeners.ListenerRegister;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -15,7 +16,7 @@ public final class Upgradablespawner extends JavaPlugin {
 
         //Registering commands
         CommandRegister commandRegister = new CommandRegister();
-
+        ListenerRegister listenerRegister = new ListenerRegister();
         //getServer().getPluginManager().registerEvents();
     }
 
