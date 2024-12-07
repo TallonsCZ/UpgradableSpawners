@@ -2,6 +2,7 @@ package cz.tallonscz.upgradablespawner.Listeners;
 
 import cz.tallonscz.upgradablespawner.Keys.SpawnerKeys;
 import cz.tallonscz.upgradablespawner.Spawners.SpawnerItem;
+import cz.tallonscz.upgradablespawner.Utilities.Database;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.CreatureSpawner;
@@ -11,7 +12,13 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.inventory.ItemStack;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+
 public class BreakSpawnerEvent implements Listener {
+
+    Database database = new Database();
 
     @EventHandler
     public void breakSpawnerEvent(BlockBreakEvent event){
@@ -29,5 +36,15 @@ public class BreakSpawnerEvent implements Listener {
         SpawnerItem item = new SpawnerItem();
         ItemStack getItem = item.getSpawner(breakBlock);
         player.getInventory().addItem(getItem);
+
+        try (Connection connection = database.hikariDataSource.getConnection()){
+            PreparedStatement preparedStatement = connection
+                    .prepareStatement("DELETE FROM `spawners` WHERE `position` = ?");
+            preparedStatement.setString(1, breakBlock.getLocation().toString());
+            preparedStatement.execute();
+        } catch (SQLException e){
+            e.printStackTrace();
+        }
+
     }
 }

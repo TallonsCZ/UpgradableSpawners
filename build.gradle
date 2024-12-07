@@ -1,4 +1,5 @@
 plugins {
+    id 'com.gradleup.shadow' version '9.0.0-beta4'
     id 'java'
 }
 
@@ -19,6 +20,15 @@ repositories {
 
 dependencies {
     compileOnly("io.papermc.paper:paper-api:1.21.1-R0.1-SNAPSHOT")
+    implementation 'com.zaxxer:HikariCP:5.0.1'
+    implementation 'org.mariadb.jdbc:mariadb-java-client:3.1.4'
+    implementation 'mysql:mysql-connector-java:8.0.33'
+}
+
+shadowJar {
+    relocate 'com.zaxxer', 'cz.tallonscze.core.com.zaxxer'
+    relocate 'org.mariadb', 'cz.tallonscze.core.org.mariadb'
+    relocate 'com.mysql', 'cz.tallonscze.core.com.mysql'
 }
 
 def targetJavaVersion = 21
