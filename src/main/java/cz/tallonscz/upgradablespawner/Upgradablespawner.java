@@ -50,7 +50,7 @@ public final class Upgradablespawner extends JavaPlugin {
         if (SpawnerInventory.getAllInventories().isEmpty()) {
             System.err.println("Spawner inventories are already empty during onDisable!");
         } else {
-            SpawnerInventory.saveAllInventories(); // Zavolejte ukládání
+            SpawnerInventory.saveAllInventories();
             System.out.println("Spawner inventories saved successfully!");
         }
         Database.close();

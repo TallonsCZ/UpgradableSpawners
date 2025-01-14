@@ -12,6 +12,7 @@ public class ListenerRegister {
         pluginManager.registerEvents(new BreakSpawnerEvent(), plugin);
         pluginManager.registerEvents(new PlaceSpawnerEvent(), plugin);
         pluginManager.registerEvents(new PlayerEvents(), plugin);
+        pluginManager.registerEvents(new SpawnerCastEvent(), plugin);
         //pluginManager.registerEvents();
     }
 }

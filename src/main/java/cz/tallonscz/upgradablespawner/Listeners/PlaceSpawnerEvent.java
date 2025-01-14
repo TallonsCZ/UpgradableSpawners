@@ -49,5 +49,6 @@ public class PlaceSpawnerEvent implements Listener {
             e.printStackTrace();
         }
         SpawnerInventory.saveAllInventories();
+        event.setCancelled(true);
     }
 }
