@@ -1,5 +1,6 @@
 package cz.tallonscz.upgradablespawner.Listeners;
 
+import cz.tallonscz.upgradablespawner.GUI.SpawnerInventory;
 import cz.tallonscz.upgradablespawner.Keys.SpawnerKeys;
 import cz.tallonscz.upgradablespawner.Spawners.SpawnerItem;
 import cz.tallonscz.upgradablespawner.Utilities.Database;
@@ -35,13 +36,15 @@ public class BreakSpawnerEvent implements Listener {
         }
         SpawnerItem item = new SpawnerItem();
         ItemStack getItem = item.getSpawner(breakBlock);
+        SpawnerInventory.removeInventory(breakBlock.getLocation());
         player.getInventory().addItem(getItem);
 
-        try (Connection connection = database.hikariDataSource.getConnection()){
+        try (Connection connection = Database.getConnection()){
             PreparedStatement preparedStatement = connection
                     .prepareStatement("DELETE FROM `spawners` WHERE `position` = ?");
             preparedStatement.setString(1, breakBlock.getLocation().toString());
             preparedStatement.execute();
+            connection.close();
         } catch (SQLException e){
             e.printStackTrace();
         }

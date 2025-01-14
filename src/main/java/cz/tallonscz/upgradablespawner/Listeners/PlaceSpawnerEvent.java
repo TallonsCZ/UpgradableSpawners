@@ -1,13 +1,17 @@
 package cz.tallonscz.upgradablespawner.Listeners;
 
+import cz.tallonscz.upgradablespawner.GUI.SpawnerInventory;
 import cz.tallonscz.upgradablespawner.Keys.SpawnerItemKeys;
 import cz.tallonscz.upgradablespawner.Spawners.SpawnerBlock;
 import cz.tallonscz.upgradablespawner.Utilities.Database;
+import org.bukkit.Bukkit;
 import org.bukkit.block.Block;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockPlaceEvent;
+import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.persistence.PersistentDataType;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -25,14 +29,25 @@ public class PlaceSpawnerEvent implements Listener {
             return;
         }
         SpawnerBlock.setSpawnerBlock(block, meta);
-        try (Connection connection = database.hikariDataSource.getConnection()){
+
+        //Vznik spawnerInventory
+        Inventory inventory = Bukkit.createInventory(null, meta.getPersistentDataContainer().get(SpawnerItemKeys.UPGRADESPAWNERS_ITEM_STORAGE, PersistentDataType.INTEGER));
+        SpawnerInventory.setInventory(block.getLocation(), inventory);
+
+        try (Connection connection = Database.getConnection()){
             PreparedStatement preparedStatement = connection
-                    .prepareStatement("INSERT INTO `spawners` (`position`, `owner`) VALUES (?, ?)");
+                    .prepareStatement("INSERT INTO `spawners` (`position`, `owner`, `world`, `x`, `y`, `z`) VALUES (?, ?, ?, ?, ?, ?)");
             preparedStatement.setString(1, block.getLocation().toString());
             preparedStatement.setString(2, event.getPlayer().getUniqueId().toString());
+            preparedStatement.setString(3, block.getLocation().getWorld().toString());
+            preparedStatement.setDouble(4, block.getLocation().x());
+            preparedStatement.setDouble(5, block.getLocation().y());
+            preparedStatement.setDouble(6, block.getLocation().z());
             preparedStatement.execute();
+            connection.close();
         } catch (SQLException e){
             e.printStackTrace();
         }
+        SpawnerInventory.saveAllInventories();
     }
 }

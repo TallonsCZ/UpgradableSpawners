@@ -6,13 +6,16 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 
 import java.io.File;
+import java.sql.Connection;
+import java.sql.SQLException;
 
 public class Database {
 
-    public HikariDataSource hikariDataSource = new HikariDataSource();
+    private static HikariDataSource hikariDataSource;
 
-    public Database(){
+    public static void initializeDatabase(){
         try{
+            hikariDataSource = new HikariDataSource();
             String host = getDatabaseConfig().getString("database.host", null);
             String database = getDatabaseConfig().getString("database.database", null);
             String username = getDatabaseConfig().getString("database.username", null);
@@ -39,14 +42,24 @@ public class Database {
 
     }
 
-    private File dataFolder = Upgradablespawner.INSTANCE.getDataFolder();
+    public static Connection getConnection() throws SQLException {
+        return hikariDataSource.getConnection();
+    }
 
-    private FileConfiguration getDatabaseConfig(){
+    private static File dataFolder = Upgradablespawner.INSTANCE.getDataFolder();
+
+    private static FileConfiguration getDatabaseConfig(){
         File file = new File(dataFolder, "mysql.yml");
         if(file.exists()){
             return YamlConfiguration.loadConfiguration(file);
         } else {
             return null;
+        }
+    }
+
+    public static void close() {
+        if (hikariDataSource != null) {
+            hikariDataSource.close();
         }
     }
 }

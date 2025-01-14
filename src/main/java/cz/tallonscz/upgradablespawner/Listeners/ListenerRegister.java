@@ -11,6 +11,7 @@ public class ListenerRegister {
         PluginManager pluginManager = Upgradablespawner.INSTANCE.getServer().getPluginManager();
         pluginManager.registerEvents(new BreakSpawnerEvent(), plugin);
         pluginManager.registerEvents(new PlaceSpawnerEvent(), plugin);
+        pluginManager.registerEvents(new PlayerEvents(), plugin);
         //pluginManager.registerEvents();
     }
 }

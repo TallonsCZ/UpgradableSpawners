@@ -1,11 +1,13 @@
 package cz.tallonscz.upgradablespawner;
 
 import cz.tallonscz.upgradablespawner.Commands.CommandRegister;
+import cz.tallonscz.upgradablespawner.GUI.SpawnerInventory;
 import cz.tallonscz.upgradablespawner.Listeners.ListenerRegister;
 import cz.tallonscz.upgradablespawner.Utilities.Database;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import javax.xml.crypto.Data;
 import java.io.File;
 
 public final class Upgradablespawner extends JavaPlugin {
@@ -35,16 +37,22 @@ public final class Upgradablespawner extends JavaPlugin {
 
 
         try{
-            Database database = new Database();
+            Database.initializeDatabase();
         }catch (Exception e){
             getServer().getPluginManager().disablePlugin(this);
         }
 
-
+        SpawnerInventory.loadAllInventories();
     }
 
     @Override
     public void onDisable() {
-
+        if (SpawnerInventory.getAllInventories().isEmpty()) {
+            System.err.println("Spawner inventories are already empty during onDisable!");
+        } else {
+            SpawnerInventory.saveAllInventories(); // Zavolejte ukládání
+            System.out.println("Spawner inventories saved successfully!");
+        }
+        Database.close();
     }
 }
