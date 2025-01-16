@@ -13,6 +13,8 @@ public class ListenerRegister {
         pluginManager.registerEvents(new PlaceSpawnerEvent(), plugin);
         pluginManager.registerEvents(new PlayerEvents(), plugin);
         pluginManager.registerEvents(new SpawnerCastEvent(), plugin);
+        pluginManager.registerEvents(new UpgradeInventoryEvent(), plugin);
+        pluginManager.registerEvents(new SpawnerInventoryEvent(), plugin);
         //pluginManager.registerEvents();
     }
 }

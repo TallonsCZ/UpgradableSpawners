@@ -22,6 +22,9 @@ public class PlayerEvents implements Listener {
         if(!(event.getAction().isRightClick())){
             return;
         }
+        if(event.getPlayer().isSneaking()){
+            return;
+        }
         if(block.getType() != Material.SPAWNER){
             return;
         }

@@ -2,6 +2,7 @@ package cz.tallonscz.upgradablespawner.GUI;
 
 import cz.tallonscz.upgradablespawner.Upgradablespawner;
 import cz.tallonscz.upgradablespawner.Utilities.Database;
+import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -115,7 +116,7 @@ public class SpawnerInventory {
             ObjectInputStream dataInput = new ObjectInputStream(inputStream);
 
             int size = dataInput.readInt();
-            Inventory inventory = Bukkit.createInventory(null, size);
+            Inventory inventory = Bukkit.createInventory(null, size, Component.text("Spawner Inventory"));
 
             for (int i = 0; i < size; i++){
                 Map<String, Object> serializedItem = (Map<String, Object>) dataInput.readObject();

@@ -4,6 +4,7 @@ import cz.tallonscz.upgradablespawner.GUI.SpawnerInventory;
 import cz.tallonscz.upgradablespawner.Keys.SpawnerItemKeys;
 import cz.tallonscz.upgradablespawner.Spawners.SpawnerBlock;
 import cz.tallonscz.upgradablespawner.Utilities.Database;
+import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.block.Block;
 import org.bukkit.event.EventHandler;
@@ -31,7 +32,7 @@ public class PlaceSpawnerEvent implements Listener {
         SpawnerBlock.setSpawnerBlock(block, meta);
 
         //Vznik spawnerInventory
-        Inventory inventory = Bukkit.createInventory(null, meta.getPersistentDataContainer().get(SpawnerItemKeys.UPGRADESPAWNERS_ITEM_STORAGE, PersistentDataType.INTEGER));
+        Inventory inventory = Bukkit.createInventory(null, meta.getPersistentDataContainer().get(SpawnerItemKeys.UPGRADESPAWNERS_ITEM_STORAGE, PersistentDataType.INTEGER), Component.text("Spawner Inventory"));
         SpawnerInventory.setInventory(block.getLocation(), inventory);
 
         try (Connection connection = Database.getConnection()){
