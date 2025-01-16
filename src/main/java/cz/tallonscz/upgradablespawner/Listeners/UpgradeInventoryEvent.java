@@ -1,6 +1,7 @@
 package cz.tallonscz.upgradablespawner.Listeners;
 
 import cz.tallonscz.upgradablespawner.GUI.UpgradeInventory;
+import net.kyori.adventure.text.Component;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -11,17 +12,17 @@ public class UpgradeInventoryEvent implements Listener {
 
     @EventHandler
     public void playerClickUpgradeInventoryEvent(InventoryClickEvent event){
-        //Gets variables
-        UpgradeInventory upgradeInventory = new UpgradeInventory();
-        Inventory upgradeInv = upgradeInventory.getInventory();
-        Inventory inv = event.getClickedInventory();
         Player player = (Player) event.getWhoClicked();
+        Inventory clickedInventory = event.getClickedInventory();
+        if(clickedInventory == null){return;}
 
-        if(inv != upgradeInv){
+        Component nameInventory = event.getView().title();
+        Component upgradeInv = Component.text("Upgrade Menu");
+        player.sendMessage(nameInventory + " " + upgradeInv);
+        if(!nameInventory.equals(upgradeInv)){
             return;
         }
-
-
+        event.setCancelled(true);
 
     }
 

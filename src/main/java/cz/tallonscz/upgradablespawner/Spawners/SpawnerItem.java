@@ -34,6 +34,8 @@ public class SpawnerItem {
         setPersistantData(meta, SpawnerItemKeys.UPGRADESPAWNERS_ITEM_LEVEL, 0);
         setPersistantData(meta, SpawnerItemKeys.UPGRADESPAWNERS_ITEM_TYPE, entityType.name());
         setPersistantData(meta, SpawnerItemKeys.UPGRADESPAWNERS_ITEM_STORAGE, 9);
+        setPersistantData(meta, SpawnerItemKeys.UPGRADESPAWNERS_ITEM_TIME, 30);
+        setPersistantData(meta, SpawnerItemKeys.UPGRADESPAWNERS_ITEM_AMOUNT, 1);
 
         item.setItemMeta(meta);
         return item;
@@ -51,7 +53,8 @@ public class SpawnerItem {
         setPersistantData(meta, SpawnerItemKeys.UPGRADESPAWNERS_ITEM_LEVEL, getPersistantDataIntFromBlock(block, SpawnerKeys.UPGRADESPAWNERS_SPAWNER_LEVEL));
         setPersistantData(meta, SpawnerItemKeys.UPGRADESPAWNERS_ITEM_TYPE, entityType.name());
         setPersistantData(meta, SpawnerItemKeys.UPGRADESPAWNERS_ITEM_STORAGE, getPersistantDataIntFromBlock(block, SpawnerKeys.UPGRADESPAWNERS_SPAWNER_STORAGE));
-
+        setPersistantData(meta, SpawnerItemKeys.UPGRADESPAWNERS_ITEM_AMOUNT, getPersistantDataIntFromBlock(block, SpawnerKeys.UPGRADESPAWNERS_SPAWNER_AMOUNT));
+        setPersistantData(meta, SpawnerItemKeys.UPGRADESPAWNERS_ITEM_TIME, getPersistantDataIntFromBlock(block, SpawnerKeys.UPGRADESPAWNERS_SPAWNER_TIME));
         item.setItemMeta(meta);
 
         return item;

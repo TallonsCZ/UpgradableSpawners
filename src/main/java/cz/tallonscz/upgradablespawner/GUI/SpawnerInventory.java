@@ -1,10 +1,12 @@
 package cz.tallonscz.upgradablespawner.GUI;
 
+import cz.tallonscz.upgradablespawner.Upgradablespawner;
 import cz.tallonscz.upgradablespawner.Utilities.Database;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.block.Block;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
@@ -16,9 +18,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Base64;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public class SpawnerInventory {
     private static Map<Location, Inventory> spawnerInventories = new HashMap<>();
@@ -49,14 +49,16 @@ public class SpawnerInventory {
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()){
                 String world = resultSet.getString("world");
-                World worlD = Bukkit.getWorld(world);
+                UUID worldUUID = UUID.fromString(world);
+                World worlD = Bukkit.getWorld(worldUUID);
                 double x = resultSet.getDouble("x");
                 double y = resultSet.getDouble("y");
                 double z = resultSet.getDouble("z");
                 Location location = new Location(worlD, x, y, z);
                 Inventory loadInventory = inventoryFromBase64(resultSet.getString("inventory"));
-                spawnerInventories.put(location, loadInventory);
+                setInventory(location, loadInventory);
 
+                System.out.println(location);
             }
             connection.close();
         } catch (SQLException e){
@@ -76,7 +78,8 @@ public class SpawnerInventory {
             }catch (SQLException e){
                 e.printStackTrace();
                 return;
-            }   
+            }
+            System.out.println(location);
         });
 
             

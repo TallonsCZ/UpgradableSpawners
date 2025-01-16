@@ -1,11 +1,13 @@
 package cz.tallonscz.upgradablespawner.Listeners;
 
 import cz.tallonscz.upgradablespawner.GUI.SpawnerInventory;
+import cz.tallonscz.upgradablespawner.GUI.UpgradeInventory;
 import cz.tallonscz.upgradablespawner.Keys.SpawnerKeys;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.CreatureSpawner;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEvent;
@@ -34,5 +36,30 @@ public class PlayerEvents implements Listener {
         event.getPlayer().openInventory(inv);
     }
 
-
+    @EventHandler
+    public void playerOpenUpgradeInventory(PlayerInteractEvent event){
+        Block block = event.getClickedBlock();
+        assert block != null;
+        if(!(event.getAction().isRightClick())){
+            return;
+        }
+        if(!(event.getPlayer().isSneaking())){
+            return;
+        }
+        if(block.getType() != Material.SPAWNER){
+            return;
+        }
+        if (!(block.getState() instanceof CreatureSpawner spawner)){
+            return;
+        }
+        if (!(spawner.getPersistentDataContainer().has(SpawnerKeys.UPGRADESPAWNERS_SPAWNER_SPAWNERS))){
+            return;
+        }
+        Player player = event.getPlayer();
+        UpgradeInventory upgradeInventory = new UpgradeInventory(spawner.getPersistentDataContainer());
+        player.openInventory(upgradeInventory.getInventory());
+        event.setCancelled(true);
+    }
 }
+
+

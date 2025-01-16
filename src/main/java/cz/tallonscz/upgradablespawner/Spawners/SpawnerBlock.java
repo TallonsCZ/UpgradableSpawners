@@ -24,6 +24,8 @@ public class SpawnerBlock {
             setPersistantData(SpawnerKeys.UPGRADESPAWNERS_SPAWNER_TYPE, spawner, SpawnerItem.getStringPersistantDataFromItem(meta, SpawnerItemKeys.UPGRADESPAWNERS_ITEM_TYPE));
             setPersistantData(SpawnerKeys.UPGRADESPAWNERS_SPAWNER_LEVEL, spawner, SpawnerItem.getIntPersistantDataFromItem(meta, SpawnerItemKeys.UPGRADESPAWNERS_ITEM_LEVEL));
             setPersistantData(SpawnerKeys.UPGRADESPAWNERS_SPAWNER_STORAGE, spawner, SpawnerItem.getIntPersistantDataFromItem(meta, SpawnerItemKeys.UPGRADESPAWNERS_ITEM_STORAGE));
+            setPersistantData(SpawnerKeys.UPGRADESPAWNERS_SPAWNER_TIME, spawner, SpawnerItem.getIntPersistantDataFromItem(meta, SpawnerItemKeys.UPGRADESPAWNERS_ITEM_TIME));
+            setPersistantData(SpawnerKeys.UPGRADESPAWNERS_SPAWNER_AMOUNT, spawner, SpawnerItem.getIntPersistantDataFromItem(meta, SpawnerItemKeys.UPGRADESPAWNERS_ITEM_AMOUNT));
             spawner.update();
         }
     }

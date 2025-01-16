@@ -39,7 +39,7 @@ public class PlaceSpawnerEvent implements Listener {
                     .prepareStatement("INSERT INTO `spawners` (`position`, `owner`, `world`, `x`, `y`, `z`) VALUES (?, ?, ?, ?, ?, ?)");
             preparedStatement.setString(1, block.getLocation().toString());
             preparedStatement.setString(2, event.getPlayer().getUniqueId().toString());
-            preparedStatement.setString(3, block.getLocation().getWorld().toString());
+            preparedStatement.setString(3, block.getLocation().getWorld().getUID().toString());
             preparedStatement.setDouble(4, block.getLocation().x());
             preparedStatement.setDouble(5, block.getLocation().y());
             preparedStatement.setDouble(6, block.getLocation().z());
@@ -49,6 +49,5 @@ public class PlaceSpawnerEvent implements Listener {
             e.printStackTrace();
         }
         SpawnerInventory.saveAllInventories();
-        event.setCancelled(true);
     }
 }
