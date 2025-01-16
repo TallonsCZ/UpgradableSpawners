@@ -57,8 +57,6 @@ public class SpawnerInventory {
                 Location location = new Location(worlD, x, y, z);
                 Inventory loadInventory = inventoryFromBase64(resultSet.getString("inventory"));
                 setInventory(location, loadInventory);
-
-                System.out.println(location);
             }
             connection.close();
         } catch (SQLException e){
