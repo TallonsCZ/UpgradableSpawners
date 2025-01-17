@@ -1,5 +1,6 @@
 package cz.tallonscz.upgradablespawner.Spawners;
 
+import com.destroystokyo.paper.loottable.LootableEntityInventory;
 import cz.tallonscz.upgradablespawner.Keys.SpawnerItemKeys;
 import cz.tallonscz.upgradablespawner.Keys.SpawnerKeys;
 import org.bukkit.Material;
@@ -30,7 +31,10 @@ public class SpawnerBlock {
             spawner.update();
 
             spawner.setSpawnCount(spawner.getPersistentDataContainer().get(SpawnerKeys.UPGRADESPAWNERS_SPAWNER_AMOUNT, PersistentDataType.INTEGER));
-            spawner.setDelay(spawner.getPersistentDataContainer().get(SpawnerKeys.UPGRADESPAWNERS_SPAWNER_TIME, PersistentDataType.INTEGER));
+            int delay = spawner.getPersistentDataContainer().get(SpawnerKeys.UPGRADESPAWNERS_SPAWNER_TIME, PersistentDataType.INTEGER)*20;
+            spawner.setDelay(delay);
+            spawner.setMaxSpawnDelay(delay);
+            spawner.setMinSpawnDelay(delay);
 
             spawner.update();
         }
@@ -60,6 +64,21 @@ public class SpawnerBlock {
         }
         container.set(SpawnerKeys.UPGRADESPAWNERS_SPAWNER_AMOUNT, PersistentDataType.INTEGER, newAmount);
         spawner.setSpawnCount(newAmount);
+        spawner.update();
+        return 0;
+    }
+
+    public static int changeTime(CreatureSpawner spawner){
+        PersistentDataContainer container = spawner.getPersistentDataContainer();
+        int currentTime = container.get(SpawnerKeys.UPGRADESPAWNERS_SPAWNER_TIME, PersistentDataType.INTEGER);
+        int newTime = currentTime - 5;
+        if (newTime < 5){
+            return 1;
+        }
+        container.set(SpawnerKeys.UPGRADESPAWNERS_SPAWNER_TIME, PersistentDataType.INTEGER, newTime);
+        spawner.setDelay(newTime*20);
+        spawner.setMinSpawnDelay(newTime*20);
+        spawner.setMaxSpawnDelay(newTime*20);
         spawner.update();
         return 0;
     }
