@@ -7,7 +7,6 @@ import cz.tallonscz.upgradablespawner.Utilities.Database;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import javax.xml.crypto.Data;
 import java.io.File;
 
 public final class Upgradablespawner extends JavaPlugin {

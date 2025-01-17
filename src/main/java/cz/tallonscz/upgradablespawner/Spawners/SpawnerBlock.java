@@ -1,6 +1,5 @@
 package cz.tallonscz.upgradablespawner.Spawners;
 
-import com.destroystokyo.paper.loottable.LootableEntityInventory;
 import cz.tallonscz.upgradablespawner.Keys.SpawnerItemKeys;
 import cz.tallonscz.upgradablespawner.Keys.SpawnerKeys;
 import org.bukkit.Material;

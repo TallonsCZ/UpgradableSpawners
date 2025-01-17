@@ -1,13 +1,10 @@
 package cz.tallonscz.upgradablespawner.GUI;
 
-import cz.tallonscz.upgradablespawner.Upgradablespawner;
 import cz.tallonscz.upgradablespawner.Utilities.Database;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
-import org.bukkit.block.Block;
-import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
@@ -19,7 +16,10 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.*;
+import java.util.Base64;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
 
 public class SpawnerInventory {
     private static Map<Location, Inventory> spawnerInventories = new HashMap<>();

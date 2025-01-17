@@ -20,9 +20,6 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 
-import java.util.HashMap;
-import java.util.Map;
-
 public class UpgradeInventoryEvent implements Listener {
 
     @EventHandler
