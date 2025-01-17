@@ -50,4 +50,17 @@ public class SpawnerBlock {
         PersistentDataContainer container = spawner.getPersistentDataContainer();
         container.set(key, PersistentDataType.STRING, string);
     }
+
+    public static int changeAmount(CreatureSpawner spawner){
+        PersistentDataContainer container = spawner.getPersistentDataContainer();
+        int currentAmount = container.get(SpawnerKeys.UPGRADESPAWNERS_SPAWNER_AMOUNT, PersistentDataType.INTEGER);
+        int newAmount = currentAmount+1;
+        if (newAmount > 5){
+            return 1;
+        }
+        container.set(SpawnerKeys.UPGRADESPAWNERS_SPAWNER_AMOUNT, PersistentDataType.INTEGER, newAmount);
+        spawner.setSpawnCount(newAmount);
+        spawner.update();
+        return 0;
+    }
 }

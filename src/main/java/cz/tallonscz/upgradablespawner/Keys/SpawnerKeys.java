@@ -15,4 +15,7 @@ public class SpawnerKeys {
     public static final NamespacedKey UPGRADESPAWNERS_SPAWNER_STORAGE = new NamespacedKey(plugin, "UPGRADESPAWNERS_SPAWNER_STORAGE");
     public static final NamespacedKey UPGRADESPAWNERS_SPAWNER_AMOUNT = new NamespacedKey(plugin, "UPGRADESPAWNERS_SPAWNER_AMOUNT");
     public static final NamespacedKey UPGRADESPAWNERS_SPAWNER_TIME = new NamespacedKey(plugin, "UPGRADESPAWNERS_SPAWNER_TIME");
+
+
+    public static final NamespacedKey UPGRADESPAWNERS_PLAYER_LASTSPAWNER = new NamespacedKey(plugin, "UPGRADESPAWNERS_PLAYER_LASTSPAWNER");
 }
