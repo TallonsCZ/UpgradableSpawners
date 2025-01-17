@@ -51,10 +51,10 @@ public class GlobalCommand implements CommandExecutor, TabExecutor {
             return Arrays.asList(
                     "getSpawner"
             );
-        } else if (args.length == 2 && args[1] == "getSpawner") {
-            Arrays.asList(
+        } else if (args.length == 2 && args[1].equals("getSpawner")) {
+            return Arrays.asList(
                     "ZOMBIE",
-                    "SPIDER"
+                    "SKELETON"
             );
         }
         return List.of();
