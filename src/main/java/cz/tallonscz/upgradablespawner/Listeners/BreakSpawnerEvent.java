@@ -3,7 +3,6 @@ package cz.tallonscz.upgradablespawner.Listeners;
 import cz.tallonscz.upgradablespawner.GUI.SpawnerInventory;
 import cz.tallonscz.upgradablespawner.Keys.SpawnerKeys;
 import cz.tallonscz.upgradablespawner.Spawners.SpawnerItem;
-import cz.tallonscz.upgradablespawner.Utilities.Database;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.CreatureSpawner;
@@ -12,10 +11,6 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.inventory.ItemStack;
-
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
 
 public class BreakSpawnerEvent implements Listener {
 
