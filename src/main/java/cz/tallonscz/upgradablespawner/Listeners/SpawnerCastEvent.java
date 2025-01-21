@@ -10,6 +10,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.SpawnerSpawnEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.persistence.PersistentDataType;
 
 import java.util.Collection;
 import java.util.List;
@@ -24,9 +25,12 @@ public class SpawnerCastEvent implements Listener {
         List<Player> players = event.getLocation().getWorld().getPlayers();
         Location location = event.getSpawner().getLocation();
         Inventory inventory = SpawnerInventory.getInventory(location);
-        Collection<ItemStack> coll = DefaultDrops.getDefaultDrops(event.getEntityType());
-        for (ItemStack item : coll) {
-            inventory.addItem(item);
+        int amount = event.getSpawner().getPersistentDataContainer().get(SpawnerKeys.UPGRADESPAWNERS_SPAWNER_AMOUNT, PersistentDataType.INTEGER);
+        for (int i = 0; i < amount; i++){
+            Collection<ItemStack> coll = DefaultDrops.getDefaultDrops(event.getEntityType());
+            for (ItemStack item : coll) {
+                inventory.addItem(item);
+            }
         }
         event.setCancelled(true);
     }

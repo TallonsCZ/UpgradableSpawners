@@ -22,7 +22,9 @@ public class PlayerEvents implements Listener {
     @EventHandler
     public void playerOpenSpawnerInventory(PlayerInteractEvent event){
         Block block = event.getClickedBlock();
-        assert block != null;
+        if(block == null){
+            return;
+        }
         if(!(event.getAction().isRightClick())){
             return;
         }
@@ -38,9 +40,17 @@ public class PlayerEvents implements Listener {
         if (!(spawner.getPersistentDataContainer().has(SpawnerKeys.UPGRADESPAWNERS_SPAWNER_SPAWNERS))){
             return;
         }
+        Player player = event.getPlayer();
+        Material itemInHand = player.getInventory().getItemInMainHand().getType();
+        if (itemInHand.toString().endsWith("_SPAWN_EGG")) {
+            event.setCancelled(true);
+            return;
+        }
+
         Location location = block.getLocation();
         Inventory inv = SpawnerInventory.getInventory(location);
         event.getPlayer().openInventory(inv);
+
     }
 
     @EventHandler
@@ -63,6 +73,13 @@ public class PlayerEvents implements Listener {
             return;
         }
         Player player = event.getPlayer();
+        Material itemInHand = player.getInventory().getItemInMainHand().getType();
+        System.out.println(itemInHand.toString().endsWith("_SPAWN_EGG"));
+        if (itemInHand.toString().endsWith("_SPAWN_EGG")) {
+            event.setCancelled(true);
+            return;
+        }
+
         UpgradeInventory upgradeInventory = new UpgradeInventory(spawner.getPersistentDataContainer());
         Inventory upgInv = upgradeInventory.getInventory();
         player.openInventory(upgInv);

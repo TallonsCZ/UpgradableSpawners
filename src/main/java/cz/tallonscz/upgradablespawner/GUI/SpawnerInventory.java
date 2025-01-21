@@ -31,6 +31,10 @@ public class SpawnerInventory {
         spawnerInventories.remove(location);
     }
 
+    public static boolean isThereSpawner(Location location){
+        return spawnerInventories.get(location) != null;
+    }
+
     public static void setInventory(Location location, Inventory inventory){
         spawnerInventories.put(location, inventory);
     }

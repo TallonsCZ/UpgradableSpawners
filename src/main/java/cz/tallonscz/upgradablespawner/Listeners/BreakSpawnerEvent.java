@@ -19,8 +19,6 @@ import java.sql.SQLException;
 
 public class BreakSpawnerEvent implements Listener {
 
-    Database database = new Database();
-
     @EventHandler
     public void breakSpawnerEvent(BlockBreakEvent event){
         Block breakBlock = event.getBlock();
