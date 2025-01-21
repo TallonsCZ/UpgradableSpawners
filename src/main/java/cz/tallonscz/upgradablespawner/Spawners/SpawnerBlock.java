@@ -1,16 +1,23 @@
 package cz.tallonscz.upgradablespawner.Spawners;
 
+import cz.tallonscz.upgradablespawner.GUI.SpawnerInventory;
 import cz.tallonscz.upgradablespawner.Keys.SpawnerItemKeys;
 import cz.tallonscz.upgradablespawner.Keys.SpawnerKeys;
+import net.kyori.adventure.text.Component;
+import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockState;
 import org.bukkit.block.CreatureSpawner;
 import org.bukkit.entity.EntityType;
+import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
+
+import java.util.UUID;
 
 public class SpawnerBlock {
     public static void setSpawnerBlock(Block block, ItemMeta meta){
@@ -82,6 +89,32 @@ public class SpawnerBlock {
         spawner.setDelay(newTime*20);
         spawner.setMinSpawnDelay(newTime*20);
         spawner.setMaxSpawnDelay(newTime*20);
+        spawner.update();
+        return 0;
+    }
+
+    public static int changeInventory(CreatureSpawner spawner){
+        PersistentDataContainer container = spawner.getPersistentDataContainer();
+        int currentSize = container.get(SpawnerKeys.UPGRADESPAWNERS_SPAWNER_STORAGE, PersistentDataType.INTEGER);
+        int newSize = currentSize+9;
+        if (newSize > 54){
+            return 1;
+        }
+        Inventory newInventory = Bukkit.createInventory(null, newSize, Component.text("Spawner Inventory"));
+        Location spawnerLocation = spawner.getLocation();
+        Inventory oldInventory = SpawnerInventory.getInventory(spawnerLocation);
+        UUID getOwnerUUID = SpawnerInventory.getOwner(spawnerLocation);
+        if (getOwnerUUID == null){
+            return 1;
+        }
+        oldInventory.forEach((itemStack -> {
+            if(itemStack != null && itemStack.getAmount() > 0){
+                newInventory.addItem(itemStack);
+            }
+        }));
+        SpawnerInventory.removeInventory(spawnerLocation);
+        SpawnerInventory.setInventory(spawnerLocation, newInventory, Bukkit.getOfflinePlayer(getOwnerUUID));
+        container.set(SpawnerKeys.UPGRADESPAWNERS_SPAWNER_STORAGE, PersistentDataType.INTEGER, newSize);
         spawner.update();
         return 0;
     }

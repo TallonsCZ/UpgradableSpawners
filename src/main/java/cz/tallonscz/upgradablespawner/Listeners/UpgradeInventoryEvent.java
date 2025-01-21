@@ -73,6 +73,10 @@ public class UpgradeInventoryEvent implements Listener {
                 UpgradeInventory.updateInventory(UpgradeInventory.getUpgradeInventory(player), spawner.getPersistentDataContainer());
                 break;
             case 14:
+                if (SpawnerBlock.changeInventory(spawner) == 1){
+                    player.sendMessage(Component.text("[UpgradeSpawner] Spawner is on max upgrade value!"));
+                }
+                UpgradeInventory.updateInventory(UpgradeInventory.getUpgradeInventory(player), spawner.getPersistentDataContainer());
                 break;
             default:
                 break;

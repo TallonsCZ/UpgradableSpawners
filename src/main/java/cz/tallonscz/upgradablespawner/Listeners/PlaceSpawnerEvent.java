@@ -41,22 +41,9 @@ public class PlaceSpawnerEvent implements Listener {
         SpawnerBlock.setSpawnerBlock(block, meta);
         //Vznik spawnerInventory
         Inventory inventory = Bukkit.createInventory(null, meta.getPersistentDataContainer().get(SpawnerItemKeys.UPGRADESPAWNERS_ITEM_STORAGE, PersistentDataType.INTEGER), Component.text("Spawner Inventory"));
-        SpawnerInventory.setInventory(block.getLocation(), inventory);
+        SpawnerInventory.setInventory(block.getLocation(), inventory, event.getPlayer());
 
-        try (Connection connection = Database.getConnection()){
-            PreparedStatement preparedStatement = connection
-                    .prepareStatement("INSERT INTO `spawners` (`position`, `owner`, `world`, `x`, `y`, `z`) VALUES (?, ?, ?, ?, ?, ?)");
-            preparedStatement.setString(1, block.getLocation().toString());
-            preparedStatement.setString(2, event.getPlayer().getUniqueId().toString());
-            preparedStatement.setString(3, block.getLocation().getWorld().getUID().toString());
-            preparedStatement.setDouble(4, block.getLocation().x());
-            preparedStatement.setDouble(5, block.getLocation().y());
-            preparedStatement.setDouble(6, block.getLocation().z());
-            preparedStatement.execute();
-            connection.close();
-        } catch (SQLException e){
-            e.printStackTrace();
-        }
+
         SpawnerInventory.saveAllInventories();
     }
 }

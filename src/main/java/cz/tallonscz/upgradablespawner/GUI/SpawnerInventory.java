@@ -4,7 +4,9 @@ import cz.tallonscz.upgradablespawner.Utilities.Database;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.World;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
@@ -29,14 +31,77 @@ public class SpawnerInventory {
 
     public static void removeInventory(Location location){
         spawnerInventories.remove(location);
+
+        try (Connection connection = Database.getConnection()){
+            PreparedStatement preparedStatement = connection
+                    .prepareStatement("DELETE FROM `spawners` WHERE `position` = ?");
+            preparedStatement.setString(1, location.toString());
+            preparedStatement.execute();
+            connection.close();
+        } catch (SQLException e){
+            e.printStackTrace();
+        }
+    }
+
+    public static UUID getOwner(Location location){
+        UUID ownerUUID = null;
+        try (Connection connection = Database.getConnection()){
+            PreparedStatement preparedStatement = connection
+                    .prepareStatement("SELECT owner FROM `spawners` WHERE `position` = ?");
+            preparedStatement.setString(1, location.toString());
+            preparedStatement.execute();
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            
+            if (resultSet.next()) {
+                String owner = resultSet.getString("owner");
+                ownerUUID = UUID.fromString(owner);
+            }
+            connection.close();
+        } catch (SQLException e){
+            e.printStackTrace();
+        }
+        return ownerUUID;
     }
 
     public static boolean isThereSpawner(Location location){
         return spawnerInventories.get(location) != null;
     }
 
-    public static void setInventory(Location location, Inventory inventory){
+    public static void setInventory(Location location, Inventory inventory, Player player){
         spawnerInventories.put(location, inventory);
+        try (Connection connection = Database.getConnection()){
+            PreparedStatement preparedStatement = connection
+                    .prepareStatement("INSERT INTO `spawners` (`position`, `owner`, `world`, `x`, `y`, `z`) VALUES (?, ?, ?, ?, ?, ?)");
+            preparedStatement.setString(1, location.toString());
+            preparedStatement.setString(2, player.getUniqueId().toString());
+            preparedStatement.setString(3, location.getWorld().getUID().toString());
+            preparedStatement.setDouble(4, location.x());
+            preparedStatement.setDouble(5, location.y());
+            preparedStatement.setDouble(6, location.z());
+            preparedStatement.execute();
+            connection.close();
+        } catch (SQLException e){
+            e.printStackTrace();
+        }
+    }
+
+    public static void setInventory(Location location, Inventory inventory, OfflinePlayer player){
+        spawnerInventories.put(location, inventory);
+        try (Connection connection = Database.getConnection()){
+            PreparedStatement preparedStatement = connection
+                    .prepareStatement("INSERT INTO `spawners` (`position`, `owner`, `world`, `x`, `y`, `z`) VALUES (?, ?, ?, ?, ?, ?)");
+            preparedStatement.setString(1, location.toString());
+            preparedStatement.setString(2, player.getUniqueId().toString());
+            preparedStatement.setString(3, location.getWorld().getUID().toString());
+            preparedStatement.setDouble(4, location.x());
+            preparedStatement.setDouble(5, location.y());
+            preparedStatement.setDouble(6, location.z());
+            preparedStatement.execute();
+            connection.close();
+        } catch (SQLException e){
+            e.printStackTrace();
+        }
     }
 
     public static Inventory getInventory(Location location){
@@ -61,7 +126,7 @@ public class SpawnerInventory {
                 double z = resultSet.getDouble("z");
                 Location location = new Location(worlD, x, y, z);
                 Inventory loadInventory = inventoryFromBase64(resultSet.getString("inventory"));
-                setInventory(location, loadInventory);
+                spawnerInventories.put(location, loadInventory);
             }
             connection.close();
         } catch (SQLException e){

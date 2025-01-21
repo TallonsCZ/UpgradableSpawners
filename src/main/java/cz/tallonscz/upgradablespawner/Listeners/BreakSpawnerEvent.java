@@ -37,15 +37,5 @@ public class BreakSpawnerEvent implements Listener {
         SpawnerInventory.removeInventory(breakBlock.getLocation());
         player.getInventory().addItem(getItem);
 
-        try (Connection connection = Database.getConnection()){
-            PreparedStatement preparedStatement = connection
-                    .prepareStatement("DELETE FROM `spawners` WHERE `position` = ?");
-            preparedStatement.setString(1, breakBlock.getLocation().toString());
-            preparedStatement.execute();
-            connection.close();
-        } catch (SQLException e){
-            e.printStackTrace();
-        }
-
     }
 }
