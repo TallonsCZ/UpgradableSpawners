@@ -147,7 +147,6 @@ public class SpawnerInventory {
                 e.printStackTrace();
                 return;
             }
-            System.out.println(location);
         });
 
             

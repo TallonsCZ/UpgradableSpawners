@@ -74,7 +74,6 @@ public class PlayerEvents implements Listener {
         }
         Player player = event.getPlayer();
         Material itemInHand = player.getInventory().getItemInMainHand().getType();
-        System.out.println(itemInHand.toString().endsWith("_SPAWN_EGG"));
         if (itemInHand.toString().endsWith("_SPAWN_EGG")) {
             event.setCancelled(true);
             return;

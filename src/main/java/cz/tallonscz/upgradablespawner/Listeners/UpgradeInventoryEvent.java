@@ -61,19 +61,19 @@ public class UpgradeInventoryEvent implements Listener {
         event.setCancelled(true);
         switch (event.getSlot()){
             case 10:
-                if (SpawnerBlock.changeAmount(spawner) == 1){
+                if (SpawnerBlock.changeAmount(spawner, player) == 1){
                     player.sendMessage(Component.text("[UpgradeSpawner] Spawner is on max upgrade value!"));
                 }
                 UpgradeInventory.updateInventory(UpgradeInventory.getUpgradeInventory(player), spawner.getPersistentDataContainer());
                 break;
-            case 12:
-                if (SpawnerBlock.changeTime(spawner)==1){
+            case 13:
+                if (SpawnerBlock.changeTime(spawner, player)==1){
                     player.sendMessage(Component.text("[UpgradeSpawner] Spawner is on max upgrade value!"));
                 }
                 UpgradeInventory.updateInventory(UpgradeInventory.getUpgradeInventory(player), spawner.getPersistentDataContainer());
                 break;
-            case 14:
-                if (SpawnerBlock.changeInventory(spawner) == 1){
+            case 16:
+                if (SpawnerBlock.changeInventory(spawner, player) == 1){
                     player.sendMessage(Component.text("[UpgradeSpawner] Spawner is on max upgrade value!"));
                 }
                 UpgradeInventory.updateInventory(UpgradeInventory.getUpgradeInventory(player), spawner.getPersistentDataContainer());

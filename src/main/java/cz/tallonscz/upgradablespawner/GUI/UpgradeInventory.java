@@ -1,6 +1,7 @@
 package cz.tallonscz.upgradablespawner.GUI;
 
 import cz.tallonscz.upgradablespawner.Keys.SpawnerKeys;
+import cz.tallonscz.upgradablespawner.Utilities.Economy;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -29,15 +30,15 @@ public class UpgradeInventory {
     private void createInventory(PersistentDataContainer container){
         inventory = Bukkit.createInventory(null, 27, Component.text("Upgrade Menu"));
         inventory.setItem(10, getUpgradeAmountItem(getPersistantDataInt(container, SpawnerKeys.UPGRADESPAWNERS_SPAWNER_AMOUNT)));
-        inventory.setItem(12, getUpgradeTimeItem(getPersistantDataInt(container, SpawnerKeys.UPGRADESPAWNERS_SPAWNER_TIME)));
-        inventory.setItem(14, getUpgradeSizeItem(getPersistantDataInt(container, SpawnerKeys.UPGRADESPAWNERS_SPAWNER_STORAGE)));
+        inventory.setItem(13, getUpgradeTimeItem(getPersistantDataInt(container, SpawnerKeys.UPGRADESPAWNERS_SPAWNER_TIME)));
+        inventory.setItem(16, getUpgradeSizeItem(getPersistantDataInt(container, SpawnerKeys.UPGRADESPAWNERS_SPAWNER_STORAGE)));
     }
 
     public static void updateInventory(Inventory inventory, PersistentDataContainer container){
         inventory.clear();
         inventory.setItem(10, getUpgradeAmountItem(getPersistantDataInt(container, SpawnerKeys.UPGRADESPAWNERS_SPAWNER_AMOUNT)));
-        inventory.setItem(12, getUpgradeTimeItem(getPersistantDataInt(container, SpawnerKeys.UPGRADESPAWNERS_SPAWNER_TIME)));
-        inventory.setItem(14, getUpgradeSizeItem(getPersistantDataInt(container, SpawnerKeys.UPGRADESPAWNERS_SPAWNER_STORAGE)));
+        inventory.setItem(13, getUpgradeTimeItem(getPersistantDataInt(container, SpawnerKeys.UPGRADESPAWNERS_SPAWNER_TIME)));
+        inventory.setItem(16, getUpgradeSizeItem(getPersistantDataInt(container, SpawnerKeys.UPGRADESPAWNERS_SPAWNER_STORAGE)));
     }
 
     public Inventory getInventory() {
@@ -48,12 +49,14 @@ public class UpgradeInventory {
         ItemStack item = new ItemStack(Material.CHEST);
         ItemMeta meta = item.getItemMeta();
 
-        meta.displayName(Component.text("SIZE "+i));
+        meta.displayName(Component.text("SIZE "+i/9));
 
         List<Component> list = new ArrayList<>();
         list.add(Component.text(""));
         list.add(Component.text("Inventory size is: " + i));
-        list.add(Component.text("Upgrade cost: xx"));
+        double roundedCost = Math.round(Economy.upgradeCostCalculation(i/9) * 100.0) / 100.0;
+        list.add(Component.text("Upgrade cost: "+ roundedCost));
+
 
         meta.lore(list);
 
@@ -70,7 +73,8 @@ public class UpgradeInventory {
         List<Component> list = new ArrayList<>();
         list.add(Component.text(""));
         list.add(Component.text("Max number of Entities: " + i));
-        list.add(Component.text("Upgrade cost: xx"));
+        double roundedCost = Math.round(Economy.upgradeCostCalculation(i) * 100.0) / 100.0;
+        list.add(Component.text("Upgrade cost: "+ roundedCost));
 
         meta.lore(list);
         item.setItemMeta(meta);
@@ -80,13 +84,12 @@ public class UpgradeInventory {
     private static ItemStack getUpgradeTimeItem(int i){
         ItemStack item = new ItemStack(Material.CHEST);
         ItemMeta meta = item.getItemMeta();
-
-        meta.displayName(Component.text("Time: "+i+" s"));
-
+        int[] position = {0,6,5,4,3,2,1};
+        meta.displayName(Component.text("Time "+position[i/5]));
         List<Component> list = new ArrayList<>();
         list.add(Component.text(""));
-        list.add(Component.text("Current spawning time: " + i+ " s"));
-        list.add(Component.text("Upgrade cost: xx"));
+        list.add(Component.text("Current spawning time: " + i + " s"));
+        list.add(Component.text("Upgrade cost: "+ Economy.upgradeCostCalculation(position[i/5])));
 
         meta.lore(list);
         item.setItemMeta(meta);
@@ -109,8 +112,6 @@ public class UpgradeInventory {
     }
 
     public static void removeInventoryFromMap(Player player){
-        System.out.println(openedUpgradeInventory.toString());
         openedUpgradeInventory.remove(player);
-        System.out.println(openedUpgradeInventory.toString());
     }
 }

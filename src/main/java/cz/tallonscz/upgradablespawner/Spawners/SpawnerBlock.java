@@ -3,6 +3,7 @@ package cz.tallonscz.upgradablespawner.Spawners;
 import cz.tallonscz.upgradablespawner.GUI.SpawnerInventory;
 import cz.tallonscz.upgradablespawner.Keys.SpawnerItemKeys;
 import cz.tallonscz.upgradablespawner.Keys.SpawnerKeys;
+import cz.tallonscz.upgradablespawner.Utilities.Economy;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -12,6 +13,7 @@ import org.bukkit.block.Block;
 import org.bukkit.block.BlockState;
 import org.bukkit.block.CreatureSpawner;
 import org.bukkit.entity.EntityType;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataContainer;
@@ -66,11 +68,16 @@ public class SpawnerBlock {
         container.set(key, PersistentDataType.STRING, string);
     }
 
-    public static int changeAmount(CreatureSpawner spawner){
+    public static int changeAmount(CreatureSpawner spawner, Player player){
         PersistentDataContainer container = spawner.getPersistentDataContainer();
         int currentAmount = container.get(SpawnerKeys.UPGRADESPAWNERS_SPAWNER_AMOUNT, PersistentDataType.INTEGER);
         int newAmount = currentAmount+1;
         if (newAmount > 5){
+            return 1;
+        }
+        double upgradeCost = Economy.upgradeCostCalculation(currentAmount);
+        double roundedCost = Math.round(upgradeCost * 100.0) / 100.0;
+        if (!Economy.removeMoneyFromPlayer(player, roundedCost)){
             return 1;
         }
         container.set(SpawnerKeys.UPGRADESPAWNERS_SPAWNER_AMOUNT, PersistentDataType.INTEGER, newAmount);
@@ -78,11 +85,17 @@ public class SpawnerBlock {
         return 0;
     }
 
-    public static int changeTime(CreatureSpawner spawner){
+    public static int changeTime(CreatureSpawner spawner, Player player){
         PersistentDataContainer container = spawner.getPersistentDataContainer();
         int currentTime = container.get(SpawnerKeys.UPGRADESPAWNERS_SPAWNER_TIME, PersistentDataType.INTEGER);
         int newTime = currentTime - 5;
         if (newTime < 5){
+            return 1;
+        }
+        int[] position = {0,6,5,4,3,2,1};
+        double upgradeCost = Economy.upgradeCostCalculation(position[currentTime/5]);
+        double roundedCost = Math.round(upgradeCost * 100.0) / 100.0;
+        if (!Economy.removeMoneyFromPlayer(player, roundedCost)){
             return 1;
         }
         container.set(SpawnerKeys.UPGRADESPAWNERS_SPAWNER_TIME, PersistentDataType.INTEGER, newTime);
@@ -93,11 +106,16 @@ public class SpawnerBlock {
         return 0;
     }
 
-    public static int changeInventory(CreatureSpawner spawner){
+    public static int changeInventory(CreatureSpawner spawner, Player player){
         PersistentDataContainer container = spawner.getPersistentDataContainer();
         int currentSize = container.get(SpawnerKeys.UPGRADESPAWNERS_SPAWNER_STORAGE, PersistentDataType.INTEGER);
         int newSize = currentSize+9;
         if (newSize > 54){
+            return 1;
+        }
+        double upgradeCost = Economy.upgradeCostCalculation(currentSize/9);
+        double roundedCost = Math.round(upgradeCost * 100.0) / 100.0;
+        if (!Economy.removeMoneyFromPlayer(player, roundedCost)){
             return 1;
         }
         Inventory newInventory = Bukkit.createInventory(null, newSize, Component.text("Spawner Inventory"));
