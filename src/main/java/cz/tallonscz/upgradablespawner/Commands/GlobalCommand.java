@@ -1,6 +1,6 @@
 package cz.tallonscz.upgradablespawner.Commands;
 
-import cz.tallonscz.upgradablespawner.Spawners.SpawnerItem;
+import cz.tallonscz.upgradablespawner.Items.SpawnerItem;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;

@@ -2,7 +2,7 @@ package cz.tallonscz.upgradablespawner.Listeners;
 
 import cz.tallonscz.upgradablespawner.GUI.SpawnerInventory;
 import cz.tallonscz.upgradablespawner.Keys.SpawnerKeys;
-import cz.tallonscz.upgradablespawner.Spawners.SpawnerItem;
+import cz.tallonscz.upgradablespawner.Items.SpawnerItem;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.CreatureSpawner;

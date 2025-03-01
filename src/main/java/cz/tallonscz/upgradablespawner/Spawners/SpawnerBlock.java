@@ -1,6 +1,7 @@
 package cz.tallonscz.upgradablespawner.Spawners;
 
 import cz.tallonscz.upgradablespawner.GUI.SpawnerInventory;
+import cz.tallonscz.upgradablespawner.Items.SpawnerItem;
 import cz.tallonscz.upgradablespawner.Keys.SpawnerItemKeys;
 import cz.tallonscz.upgradablespawner.Keys.SpawnerKeys;
 import cz.tallonscz.upgradablespawner.Utilities.Economy;

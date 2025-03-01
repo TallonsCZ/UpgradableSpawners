@@ -1,4 +1,4 @@
-package cz.tallonscz.upgradablespawner.Spawners;
+package cz.tallonscz.upgradablespawner.Items;
 
 import cz.tallonscz.upgradablespawner.Keys.SpawnerItemKeys;
 import cz.tallonscz.upgradablespawner.Keys.SpawnerKeys;
