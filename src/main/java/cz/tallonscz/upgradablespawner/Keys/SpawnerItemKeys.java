@@ -14,4 +14,6 @@ public class SpawnerItemKeys {
     public static final NamespacedKey UPGRADESPAWNERS_ITEM_STORAGE = new NamespacedKey(plugin, "UPGRADESPAWNERS_ITEM_STORAGE");
     public static final NamespacedKey UPGRADESPAWNERS_ITEM_AMOUNT = new NamespacedKey(plugin, "UPGRADESPAWNERS_ITEM_AMOUNT");
     public static final NamespacedKey UPGRADESPAWNERS_ITEM_TIME = new NamespacedKey(plugin, "UPGRADESPAWNERS_ITEM_TIME");
+
+    public static final NamespacedKey UPGRADESPAWNERS_ITEM_PICKUP_ITEM = new NamespacedKey(plugin, "UPGRADESPAWNERS_ITEM_PICKUP_ITEM");
 }
