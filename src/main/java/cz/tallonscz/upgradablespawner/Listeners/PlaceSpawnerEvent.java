@@ -16,7 +16,6 @@ import org.bukkit.persistence.PersistentDataType;
 
 public class PlaceSpawnerEvent implements Listener {
 
-    Database database = new Database();
 
     @EventHandler
     public void spawnerPlaceEvent(BlockPlaceEvent event){

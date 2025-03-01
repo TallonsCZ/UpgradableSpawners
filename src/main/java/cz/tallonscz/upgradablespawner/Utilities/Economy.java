@@ -5,8 +5,10 @@ import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 
 public class Economy {
-    public static double coeficient = 2.5;
+
+    public static double MULTIPLICATOR = 2.5;
     private static final net.milkbowl.vault.economy.Economy eco = Upgradablespawner.getEconomy();
+
     public static double getPlayerEconomy(Player player){
         return Upgradablespawner.getEconomy().getBalance(player);
     }
@@ -29,6 +31,6 @@ public class Economy {
     }
 
     public static double upgradeCostCalculation(int lvl){
-        return 1000 * Math.pow(coeficient, lvl-1);
+        return 1000 * Math.pow(MULTIPLICATOR, lvl-1);
     }
 }

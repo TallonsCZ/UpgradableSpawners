@@ -6,8 +6,7 @@ import org.bukkit.plugin.PluginManager;
 
 public class ListenerRegister {
 
-    public ListenerRegister(){
-        Plugin plugin = Upgradablespawner.INSTANCE;
+    public static void registerListener(Plugin plugin){
         PluginManager pluginManager = Upgradablespawner.INSTANCE.getServer().getPluginManager();
         pluginManager.registerEvents(new BreakSpawnerEvent(), plugin);
         pluginManager.registerEvents(new PlaceSpawnerEvent(), plugin);
@@ -15,6 +14,5 @@ public class ListenerRegister {
         pluginManager.registerEvents(new SpawnerCastEvent(), plugin);
         pluginManager.registerEvents(new UpgradeInventoryEvent(), plugin);
         pluginManager.registerEvents(new SpawnerInventoryEvent(), plugin);
-        //pluginManager.registerEvents();
     }
 }

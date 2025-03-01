@@ -1,6 +1,6 @@
 package cz.tallonscz.upgradablespawner;
 
-import cz.tallonscz.upgradablespawner.Commands.CommandRegister;
+import cz.tallonscz.upgradablespawner.Commands.GlobalCommand;
 import cz.tallonscz.upgradablespawner.GUI.SpawnerInventory;
 import cz.tallonscz.upgradablespawner.Listeners.ListenerRegister;
 import cz.tallonscz.upgradablespawner.Utilities.Database;
@@ -12,9 +12,11 @@ import org.bukkit.plugin.java.JavaPlugin;
 import java.io.File;
 
 public final class Upgradablespawner extends JavaPlugin {
+
     private static Economy econ = null;
     public static Plugin INSTANCE;
     public static Upgradablespawner CLASSINSTANCE;
+
     @Override
     public void onEnable() {
         INSTANCE = this;
@@ -30,12 +32,8 @@ public final class Upgradablespawner extends JavaPlugin {
             saveResource("mysql.yml", false);
         }
 
-        //Registering commands
-        CommandRegister commandRegister = new CommandRegister();
-        ListenerRegister listenerRegister = new ListenerRegister();
-        //getServer().getPluginManager().registerEvents();
-
-
+        getCommand("UpgradeSpawner").setExecutor(new GlobalCommand());
+        ListenerRegister.registerListener(this);
 
         try{
             Database.initializeDatabase();
