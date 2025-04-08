@@ -34,7 +34,6 @@ public class SpawnerItem {
         ItemMeta meta = item.getItemMeta();
 
         meta.displayName(Component.text(entityType.name() + " SPAWNER").color(NamedTextColor.GOLD));
-
         setPersistantData(meta, SpawnerItemKeys.UPGRADESPAWNERS_ITEM_SPAWNERS, true);
         setPersistantData(meta, SpawnerItemKeys.UPGRADESPAWNERS_ITEM_LEVEL, 0);
         setPersistantData(meta, SpawnerItemKeys.UPGRADESPAWNERS_ITEM_TYPE, entityType.name());

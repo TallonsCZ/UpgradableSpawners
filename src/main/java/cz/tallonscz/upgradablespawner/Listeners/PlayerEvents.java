@@ -4,6 +4,7 @@ import cz.tallonscz.upgradablespawner.GUI.SpawnerInventory;
 import cz.tallonscz.upgradablespawner.GUI.UpgradeInventory;
 import cz.tallonscz.upgradablespawner.Items.PickupSpawnerItem;
 import cz.tallonscz.upgradablespawner.Items.SpawnerItem;
+import cz.tallonscz.upgradablespawner.Keys.SpawnerItemKeys;
 import cz.tallonscz.upgradablespawner.Keys.SpawnerKeys;
 import cz.tallonscz.upgradablespawner.Spawners.SpawnerBlock;
 import cz.tallonscz.upgradablespawner.Upgradablespawner;
@@ -182,7 +183,7 @@ public class PlayerEvents implements Listener {
 
             @Override
             public void run() {
-                holos.deleteHologram(block.getLocation());
+                holos.deleteHologram(block.getLocation().subtract(0, 1, 0).add(0.5, 0, 0.5));
                 if(timeLeft <= 0){
                     SpawnerItem item = new SpawnerItem();
                     player.getWorld().dropItem(block.getLocation().subtract(0,1,0).add(0.5,0,0.5), item.getSpawner(block));
@@ -207,15 +208,17 @@ public class PlayerEvents implements Listener {
             @Override
             public void run(){
                 final Holograms holos = new Holograms();
-                holos.deleteHologram(block.getLocation());
+                holos.deleteHologram(block.getLocation().subtract(0, 1, 0).add(0.5, 0, 0.5));
             }
         }.runTaskLater(Upgradablespawner.INSTANCE, 1);
         new BukkitRunnable(){
             int cooldown = 60;
             @Override
             public void run() {
+                final Holograms holos = new Holograms();
                 newBlock.setType(Material.SPAWNER);
                 SpawnerBlock.setSpawnerBlock(newBlock, itemStack.getItemMeta());
+                holos.createHologram(block.getLocation().subtract(0, 1, 0).add(0.5, 0, 0.5), SpawnerItem.getStringPersistantDataFromItem(itemStack.getItemMeta(), SpawnerItemKeys.UPGRADESPAWNERS_ITEM_TYPE) + " Spawner");
                 respawningBlock.remove(block.getLocation());
             }
         }.runTaskLater(Upgradablespawner.INSTANCE, 20*43200);

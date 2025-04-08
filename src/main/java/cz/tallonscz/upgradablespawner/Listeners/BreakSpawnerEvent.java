@@ -3,6 +3,7 @@ package cz.tallonscz.upgradablespawner.Listeners;
 import cz.tallonscz.upgradablespawner.GUI.SpawnerInventory;
 import cz.tallonscz.upgradablespawner.Keys.SpawnerKeys;
 import cz.tallonscz.upgradablespawner.Items.SpawnerItem;
+import cz.tallonscz.upgradablespawner.Utilities.Holograms;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.CreatureSpawner;
@@ -32,6 +33,8 @@ public class BreakSpawnerEvent implements Listener {
         SpawnerInventory.removeInventory(breakBlock.getLocation());
         player.getInventory().addItem(getItem);
         breakBlock.breakNaturally();
+        Holograms holo  = new Holograms();
+        holo.deleteHologram(breakBlock.getLocation().subtract(0, 1, 0).add(0.5, 0, 0.5));
         event.setCancelled(true);
 
     }

@@ -25,7 +25,7 @@ public class Holograms {
     }
 
     public void deleteHologram(Location location){
-        for(Entity entity: location.getWorld().getNearbyEntities(location, 3, 6, 3)){
+        for(Entity entity: location.getWorld().getNearbyEntities(location, 0.25, 0.5, 0.25)){
             if(entity instanceof ArmorStand && !entity.hasGravity()){
                 entity.remove();
             }
