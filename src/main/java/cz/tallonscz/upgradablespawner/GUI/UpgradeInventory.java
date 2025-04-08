@@ -51,6 +51,20 @@ public class UpgradeInventory {
         ItemStack item = new ItemStack(Material.CHEST);
         ItemMeta meta = item.getItemMeta();
 
+        if(i >= 54){
+            meta.displayName(Component.text("SIZE "+i/9).color(TextColor.color(255, 255, 255)).decoration(TextDecoration.ITALIC, false));
+
+            List<Component> list = new ArrayList<>();
+            list.add(Component.text(""));
+            list.add(Component.text("Inventory size is on maximum size.").color(TextColor.color(255, 255, 255)).decoration(TextDecoration.ITALIC, false));
+
+
+            meta.lore(list);
+
+            item.setItemMeta(meta);
+            return item;
+        }
+
         meta.displayName(Component.text("SIZE "+i/9).color(TextColor.color(255, 255, 255)).decoration(TextDecoration.ITALIC, false));
 
         List<Component> list = new ArrayList<>();

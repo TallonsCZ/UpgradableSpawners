@@ -20,6 +20,24 @@ public class DefaultDrops {
             case SKELETON:
                 drops.add(new ItemStack(Material.BONE, 2));
                 drops.add(new ItemStack(Material.ARROW, 1));
+            case SPIDER:
+                drops.add(new ItemStack(Material.STRING, 2));
+                drops.add(new ItemStack(Material.SPIDER_EYE, 1));
+            default:
+                break;
+        }
+        return drops;
+    }
+
+    public static Collection<ItemStack> getDefaultDropsCustom(String type){
+        List<ItemStack> drops = new ArrayList<>();
+
+        switch (type) {
+            case "WOOD":
+                drops.add(new ItemStack(Material.OAK_LOG, 1));
+                break;
+            case "INGOT":
+                drops.add(new ItemStack(Material.RAW_COPPER, 1));
             default:
                 break;
         }

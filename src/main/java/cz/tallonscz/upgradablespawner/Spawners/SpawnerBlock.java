@@ -115,7 +115,7 @@ public class SpawnerBlock {
         if (newSize > 54){
             return 1;
         }
-        double upgradeCost = Economy.upgradeCostCalculation(currentSize/9);
+        double upgradeCost = Economy.upgradeCostCalculationStorage(currentSize/9);
         double roundedCost = Math.round(upgradeCost * 100.0) / 100.0;
         if (!Economy.removeMoneyFromPlayer(player, roundedCost)){
             return 1;
