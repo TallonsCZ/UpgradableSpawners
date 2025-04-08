@@ -3,6 +3,8 @@ package cz.tallonscz.upgradablespawner.GUI;
 import cz.tallonscz.upgradablespawner.Keys.SpawnerKeys;
 import cz.tallonscz.upgradablespawner.Utilities.Economy;
 import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.TextColor;
+import net.kyori.adventure.text.format.TextDecoration;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
@@ -49,13 +51,13 @@ public class UpgradeInventory {
         ItemStack item = new ItemStack(Material.CHEST);
         ItemMeta meta = item.getItemMeta();
 
-        meta.displayName(Component.text("SIZE "+i/9));
+        meta.displayName(Component.text("SIZE "+i/9).color(TextColor.color(255, 255, 255)).decoration(TextDecoration.ITALIC, false));
 
         List<Component> list = new ArrayList<>();
         list.add(Component.text(""));
-        list.add(Component.text("Inventory size is: " + i));
-        double roundedCost = Math.round(Economy.upgradeCostCalculation(i/9) * 100.0) / 100.0;
-        list.add(Component.text("Upgrade cost: "+ roundedCost));
+        list.add(Component.text("Inventory size is: " + i).color(TextColor.color(255, 255, 255)).decoration(TextDecoration.ITALIC, false));
+        double roundedCost = Math.round(Economy.upgradeCostCalculationStorage(i/9) * 100.0) / 100.0;
+        list.add(Component.text("Upgrade cost: "+ roundedCost).color(TextColor.color(255, 255, 255)).decoration(TextDecoration.ITALIC, false));
 
 
         meta.lore(list);
@@ -68,13 +70,13 @@ public class UpgradeInventory {
         ItemStack item = new ItemStack(Material.CHEST);
         ItemMeta meta = item.getItemMeta();
 
-        meta.displayName(Component.text("AMOUNT "+i));
+        meta.displayName(Component.text("AMOUNT "+i).color(TextColor.color(255, 255, 255)).decoration(TextDecoration.ITALIC, false));
 
         List<Component> list = new ArrayList<>();
         list.add(Component.text(""));
-        list.add(Component.text("Max number of Entities: " + i));
+        list.add(Component.text("Max number of Entities: " + i).color(TextColor.color(255, 255, 255)).decoration(TextDecoration.ITALIC, false));
         double roundedCost = Math.round(Economy.upgradeCostCalculation(i) * 100.0) / 100.0;
-        list.add(Component.text("Upgrade cost: "+ roundedCost));
+        list.add(Component.text("Upgrade cost: "+ roundedCost).color(TextColor.color(255, 255, 255)).decoration(TextDecoration.ITALIC, false));
 
         meta.lore(list);
         item.setItemMeta(meta);
@@ -85,11 +87,11 @@ public class UpgradeInventory {
         ItemStack item = new ItemStack(Material.CHEST);
         ItemMeta meta = item.getItemMeta();
         int[] position = {0,6,5,4,3,2,1};
-        meta.displayName(Component.text("Time "+position[i/5]));
+        meta.displayName(Component.text("Time "+position[i/5]).color(TextColor.color(255, 255, 255)).decoration(TextDecoration.ITALIC, false));
         List<Component> list = new ArrayList<>();
         list.add(Component.text(""));
-        list.add(Component.text("Current spawning time: " + i + " s"));
-        list.add(Component.text("Upgrade cost: "+ Economy.upgradeCostCalculation(position[i/5])));
+        list.add(Component.text("Current spawning time: " + i + " s").color(TextColor.color(255, 255, 255)).decoration(TextDecoration.ITALIC, false));
+        list.add(Component.text("Upgrade cost: "+ Economy.upgradeCostCalculation(position[i/5])).color(TextColor.color(255, 255, 255)).decoration(TextDecoration.ITALIC, false));
 
         meta.lore(list);
         item.setItemMeta(meta);

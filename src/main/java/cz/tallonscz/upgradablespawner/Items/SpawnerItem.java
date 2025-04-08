@@ -4,6 +4,8 @@ import cz.tallonscz.upgradablespawner.Keys.SpawnerItemKeys;
 import cz.tallonscz.upgradablespawner.Keys.SpawnerKeys;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
+import net.kyori.adventure.text.format.TextColor;
+import net.kyori.adventure.text.format.TextDecoration;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.block.Block;
@@ -14,6 +16,9 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class SpawnerItem {
 
@@ -28,7 +33,7 @@ public class SpawnerItem {
         item.setAmount(amount);
         ItemMeta meta = item.getItemMeta();
 
-        meta.displayName(Component.text(entityType.name() + "SPAWNER").color(NamedTextColor.GOLD));
+        meta.displayName(Component.text(entityType.name() + " SPAWNER").color(NamedTextColor.GOLD));
 
         setPersistantData(meta, SpawnerItemKeys.UPGRADESPAWNERS_ITEM_SPAWNERS, true);
         setPersistantData(meta, SpawnerItemKeys.UPGRADESPAWNERS_ITEM_LEVEL, 0);
@@ -36,13 +41,44 @@ public class SpawnerItem {
         setPersistantData(meta, SpawnerItemKeys.UPGRADESPAWNERS_ITEM_STORAGE, 9);
         setPersistantData(meta, SpawnerItemKeys.UPGRADESPAWNERS_ITEM_TIME, 30);
         setPersistantData(meta, SpawnerItemKeys.UPGRADESPAWNERS_ITEM_AMOUNT, 1);
-
+        setPersistantData(meta, SpawnerItemKeys.UPGRADESPAWNERS_ITEM_PLAYER, false);
         item.setItemMeta(meta);
         return item;
     }
 
     //CREATING SPAWNER ITEM FROM BLOCK
     public ItemStack getSpawner(Block block){
+        item.setAmount(1);
+        ItemMeta meta = item.getItemMeta();
+        EntityType entityType = EntityType.valueOf(getPersistantDataStringFromBlock(block, SpawnerKeys.UPGRADESPAWNERS_SPAWNER_TYPE));
+
+        meta.displayName(Component.text(entityType.name() + " SPAWNER").color(NamedTextColor.GOLD));
+
+        setPersistantData(meta, SpawnerItemKeys.UPGRADESPAWNERS_ITEM_SPAWNERS, true);
+        setPersistantData(meta, SpawnerItemKeys.UPGRADESPAWNERS_ITEM_LEVEL, getPersistantDataIntFromBlock(block, SpawnerKeys.UPGRADESPAWNERS_SPAWNER_LEVEL));
+        setPersistantData(meta, SpawnerItemKeys.UPGRADESPAWNERS_ITEM_TYPE, entityType.name());
+        setPersistantData(meta, SpawnerItemKeys.UPGRADESPAWNERS_ITEM_STORAGE, getPersistantDataIntFromBlock(block, SpawnerKeys.UPGRADESPAWNERS_SPAWNER_STORAGE));
+        setPersistantData(meta, SpawnerItemKeys.UPGRADESPAWNERS_ITEM_AMOUNT, getPersistantDataIntFromBlock(block, SpawnerKeys.UPGRADESPAWNERS_SPAWNER_AMOUNT));
+        setPersistantData(meta, SpawnerItemKeys.UPGRADESPAWNERS_ITEM_TIME, getPersistantDataIntFromBlock(block, SpawnerKeys.UPGRADESPAWNERS_SPAWNER_TIME));
+        setPersistantData(meta, SpawnerItemKeys.UPGRADESPAWNERS_ITEM_PLAYER, true);
+        List<Component> list = new ArrayList<>();
+        Component sepLine = Component.text("");
+        Component fLine = Component.text("Time: " + getPersistantDataIntFromBlock(block, SpawnerKeys.UPGRADESPAWNERS_SPAWNER_TIME)).color(TextColor.color(255, 255, 255)).decoration(TextDecoration.ITALIC, false);
+        Component sLine = Component.text("Amount: " + getPersistantDataIntFromBlock(block, SpawnerKeys.UPGRADESPAWNERS_SPAWNER_AMOUNT)).color(TextColor.color(255, 255, 255)).decoration(TextDecoration.ITALIC, false);
+        Component pLine = Component.text("Storage: " + getPersistantDataIntFromBlock(block, SpawnerKeys.UPGRADESPAWNERS_SPAWNER_STORAGE)).color(TextColor.color(255, 255, 255)).decoration(TextDecoration.ITALIC, false);
+        list.add(sepLine);
+        list.add(fLine);
+        list.add(sLine);
+        list.add(pLine);
+        meta.lore(list);
+
+        item.setItemMeta(meta);
+
+        return item;
+    }
+
+    //CREATING SPAWNER ITEM FROM BLOCK TO RESPAWN
+    public ItemStack getSpawnerForRespawn(Block block){
         item.setAmount(1);
         ItemMeta meta = item.getItemMeta();
         EntityType entityType = EntityType.valueOf(getPersistantDataStringFromBlock(block, SpawnerKeys.UPGRADESPAWNERS_SPAWNER_TYPE));
@@ -55,6 +91,18 @@ public class SpawnerItem {
         setPersistantData(meta, SpawnerItemKeys.UPGRADESPAWNERS_ITEM_STORAGE, getPersistantDataIntFromBlock(block, SpawnerKeys.UPGRADESPAWNERS_SPAWNER_STORAGE));
         setPersistantData(meta, SpawnerItemKeys.UPGRADESPAWNERS_ITEM_AMOUNT, getPersistantDataIntFromBlock(block, SpawnerKeys.UPGRADESPAWNERS_SPAWNER_AMOUNT));
         setPersistantData(meta, SpawnerItemKeys.UPGRADESPAWNERS_ITEM_TIME, getPersistantDataIntFromBlock(block, SpawnerKeys.UPGRADESPAWNERS_SPAWNER_TIME));
+        setPersistantData(meta, SpawnerItemKeys.UPGRADESPAWNERS_ITEM_PLAYER, false);
+        List<Component> list = new ArrayList<>();
+        Component sepLine = Component.text("");
+        Component fLine = Component.text("Time: " + getPersistantDataIntFromBlock(block, SpawnerKeys.UPGRADESPAWNERS_SPAWNER_TIME)).color(TextColor.color(255, 255, 255)).decoration(TextDecoration.ITALIC, false);
+        Component sLine = Component.text("Amount: " + getPersistantDataIntFromBlock(block, SpawnerKeys.UPGRADESPAWNERS_SPAWNER_AMOUNT)).color(TextColor.color(255, 255, 255)).decoration(TextDecoration.ITALIC, false);
+        Component pLine = Component.text("Storage: " + getPersistantDataIntFromBlock(block, SpawnerKeys.UPGRADESPAWNERS_SPAWNER_STORAGE)).color(TextColor.color(255, 255, 255)).decoration(TextDecoration.ITALIC, false);
+        list.add(sepLine);
+        list.add(fLine);
+        list.add(sLine);
+        list.add(pLine);
+        meta.lore(list);
+
         item.setItemMeta(meta);
 
         return item;

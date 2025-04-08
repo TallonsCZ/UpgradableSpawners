@@ -10,7 +10,6 @@ public class Holograms {
         String[] lines;
         lines = inLines;
 
-
         for (String line : lines){
             ArmorStand stand = location.getWorld().spawn(location, ArmorStand.class);
 
@@ -26,7 +25,7 @@ public class Holograms {
     }
 
     public void deleteHologram(Location location){
-        for(Entity entity: location.getWorld().getNearbyEntities(location, 2, 5, 2)){
+        for(Entity entity: location.getWorld().getNearbyEntities(location, 3, 6, 3)){
             if(entity instanceof ArmorStand && !entity.hasGravity()){
                 entity.remove();
             }

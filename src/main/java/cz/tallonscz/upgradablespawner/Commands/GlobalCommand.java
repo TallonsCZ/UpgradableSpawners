@@ -1,5 +1,6 @@
 package cz.tallonscz.upgradablespawner.Commands;
 
+import cz.tallonscz.upgradablespawner.Items.PickupSpawnerItem;
 import cz.tallonscz.upgradablespawner.Items.SpawnerItem;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -24,12 +25,18 @@ public class GlobalCommand implements CommandExecutor, TabExecutor {
         switch (strings[0]) {
             case "getSpawner":
                 return getSpawnerItem(player, strings[1]);
+            case "getItem":
+                return getPickupItem(player);
         }
         player.sendMessage("You have just type command.");
         return true;
     }
 
-
+    private boolean getPickupItem(Player player){
+        PickupSpawnerItem item = new PickupSpawnerItem();
+        player.getInventory().addItem(item.getItem());
+        return true;
+    }
     private boolean getSpawnerItem(Player player, String type){
         EntityType entityType;
         try{
@@ -49,9 +56,10 @@ public class GlobalCommand implements CommandExecutor, TabExecutor {
     public @Nullable List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
         if (args.length == 1){
             return Arrays.asList(
-                    "getSpawner"
+                    "getSpawner",
+                    "getItem"
             );
-        } else if (args.length == 2 && args[1].equals("getSpawner")) {
+        } else if (args.length == 2 && args[0].equals("getSpawner")) {
             return Arrays.asList(
                     "ZOMBIE",
                     "SKELETON"

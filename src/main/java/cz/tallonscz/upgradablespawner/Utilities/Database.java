@@ -7,6 +7,7 @@ import org.bukkit.configuration.file.YamlConfiguration;
 
 import java.io.File;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 public class Database {
@@ -60,6 +61,28 @@ public class Database {
     public static void close() {
         if (hikariDataSource != null) {
             hikariDataSource.close();
+        }
+    }
+
+    public static void createSpawnersTable() {
+        String sql = "CREATE TABLE IF NOT EXISTS spawners (" +
+                "position TEXT NOT NULL," +
+                "owner TEXT NOT NULL," +
+                "world TEXT NOT NULL," +
+                "x REAL NOT NULL," +
+                "y REAL NOT NULL," +
+                "z REAL NOT NULL," +
+                "inventory TEXT" +
+                ");";
+
+        try (Connection conn = getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.execute();
+            System.out.println("Tabulka 'spawners' byla zkontrolována nebo vytvořena.");
+
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
     }
 }

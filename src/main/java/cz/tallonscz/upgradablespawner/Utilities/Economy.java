@@ -6,7 +6,8 @@ import org.bukkit.entity.Player;
 
 public class Economy {
 
-    public static double MULTIPLICATOR = 2.5;
+    private static double MULTIPLICATOR = 2.5;
+    private static double MULTIPLICATOR_STORAGE = 3.5;
     private static final net.milkbowl.vault.economy.Economy eco = Upgradablespawner.getEconomy();
 
     public static double getPlayerEconomy(Player player){
@@ -32,5 +33,9 @@ public class Economy {
 
     public static double upgradeCostCalculation(int lvl){
         return 1000 * Math.pow(MULTIPLICATOR, lvl-1);
+    }
+
+    public static double upgradeCostCalculationStorage(int lvl){
+        return 1000 * Math.pow(MULTIPLICATOR_STORAGE, lvl-1);
     }
 }

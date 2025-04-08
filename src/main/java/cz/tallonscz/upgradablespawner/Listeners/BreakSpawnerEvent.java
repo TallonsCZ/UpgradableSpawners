@@ -31,6 +31,8 @@ public class BreakSpawnerEvent implements Listener {
         ItemStack getItem = item.getSpawner(breakBlock);
         SpawnerInventory.removeInventory(breakBlock.getLocation());
         player.getInventory().addItem(getItem);
+        breakBlock.breakNaturally();
+        event.setCancelled(true);
 
     }
 }

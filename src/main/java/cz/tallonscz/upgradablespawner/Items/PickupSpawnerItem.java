@@ -10,7 +10,7 @@ import org.bukkit.persistence.PersistentDataType;
 public class PickupSpawnerItem {
     private ItemStack item;
 
-    PickupSpawnerItem(){
+    public PickupSpawnerItem(){
          item = new ItemStack(Material.STICK);
          ItemMeta itemMeta = item.getItemMeta();
          itemMeta.getPersistentDataContainer().set(SpawnerItemKeys.UPGRADESPAWNERS_ITEM_PICKUP_ITEM, PersistentDataType.BOOLEAN, true);

@@ -2,9 +2,15 @@ package cz.tallonscz.upgradablespawner;
 
 import cz.tallonscz.upgradablespawner.Commands.GlobalCommand;
 import cz.tallonscz.upgradablespawner.GUI.SpawnerInventory;
+import cz.tallonscz.upgradablespawner.Items.SpawnerItem;
+import cz.tallonscz.upgradablespawner.Listeners.BreakSpawnerEvent;
 import cz.tallonscz.upgradablespawner.Listeners.ListenerRegister;
+import cz.tallonscz.upgradablespawner.Listeners.PlayerEvents;
+import cz.tallonscz.upgradablespawner.Spawners.SpawnerBlock;
 import cz.tallonscz.upgradablespawner.Utilities.Database;
 import net.milkbowl.vault.economy.Economy;
+import org.bukkit.block.Block;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -37,6 +43,7 @@ public final class Upgradablespawner extends JavaPlugin {
 
         try{
             Database.initializeDatabase();
+            Database.createSpawnersTable();
         }catch (Exception e){
             getServer().getPluginManager().disablePlugin(this);
         }
@@ -57,6 +64,15 @@ public final class Upgradablespawner extends JavaPlugin {
         } else {
             SpawnerInventory.saveAllInventories();
             System.out.println("Spawner inventories saved successfully!");
+        }
+        
+        if(!PlayerEvents.respawningBlock.isEmpty()){
+            PlayerEvents.respawningBlock.forEach((location, block) -> {
+                SpawnerItem item = new SpawnerItem();
+                ItemStack itemStack = item.getSpawner(block);
+                Block newBlock = location.getWorld().getBlockAt(block.getLocation());
+                SpawnerBlock.setSpawnerBlock(newBlock, itemStack.getItemMeta());
+            });
         }
         Database.close();
     }
