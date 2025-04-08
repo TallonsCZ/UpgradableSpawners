@@ -59,22 +59,32 @@ public class UpgradeInventoryEvent implements Listener {
             return;
         }
         event.setCancelled(true);
+        int result;
         switch (event.getSlot()){
             case 10:
-                if (SpawnerBlock.changeAmount(spawner, player) == 1){
+                result = SpawnerBlock.changeAmount(spawner, player);
+                if (result == 1){
                     player.sendMessage(Component.text("[UpgradeSpawner] Spawner is on max upgrade value!"));
+                }else if(result == 2){
+                    player.sendMessage(Component.text("[UpgradeSpawner] You dont have enought money!"));
                 }
                 UpgradeInventory.updateInventory(UpgradeInventory.getUpgradeInventory(player), spawner.getPersistentDataContainer());
                 break;
             case 13:
-                if (SpawnerBlock.changeTime(spawner, player)==1){
+                result = SpawnerBlock.changeTime(spawner, player);
+                if (result == 1){
                     player.sendMessage(Component.text("[UpgradeSpawner] Spawner is on max upgrade value!"));
+                }else if(result == 2){
+                    player.sendMessage(Component.text("[UpgradeSpawner] You dont have enought money!"));
                 }
                 UpgradeInventory.updateInventory(UpgradeInventory.getUpgradeInventory(player), spawner.getPersistentDataContainer());
                 break;
             case 16:
-                if (SpawnerBlock.changeInventory(spawner, player) == 1){
+                result = SpawnerBlock.changeInventory(spawner, player);
+                if (result == 1){
                     player.sendMessage(Component.text("[UpgradeSpawner] Spawner is on max upgrade value!"));
+                }else if(result == 2){
+                    player.sendMessage(Component.text("[UpgradeSpawner] You dont have enought money!"));
                 }
                 UpgradeInventory.updateInventory(UpgradeInventory.getUpgradeInventory(player), spawner.getPersistentDataContainer());
                 break;

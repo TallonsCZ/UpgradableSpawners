@@ -22,9 +22,16 @@ public class GlobalCommand implements CommandExecutor, TabExecutor {
             commandSender.sendMessage("This command can be only execute by Player");
             return true;
         }
+        List<String> allowedTypes = Arrays.asList("ZOMBIE", "SKELETON", "WOOD", "INGOT");
         switch (strings[0]) {
             case "getSpawner":
-                return getSpawnerItem(player, strings[1]);
+                if (!allowedTypes.contains(strings[1].toUpperCase())) {
+                    player.sendMessage("You used invalid type. Allowed: " + String.join(", ", allowedTypes));
+                    return true;
+                }else{
+                    return getSpawnerItem(player, strings[1]);
+                }
+
             case "getItem":
                 return getPickupItem(player);
         }
@@ -38,15 +45,8 @@ public class GlobalCommand implements CommandExecutor, TabExecutor {
         return true;
     }
     private boolean getSpawnerItem(Player player, String type){
-        EntityType entityType;
-        try{
-            entityType = EntityType.valueOf(type);
-        }catch (IllegalArgumentException e){
-            return false;
-        }
-
         SpawnerItem spawnerItem = new SpawnerItem();
-        ItemStack item = spawnerItem.getSpawner(entityType, 1);
+        ItemStack item = spawnerItem.getSpawner(type, 1);
         player.getInventory().addItem(item);
         return true;
     }
@@ -62,7 +62,9 @@ public class GlobalCommand implements CommandExecutor, TabExecutor {
         } else if (args.length == 2 && args[0].equals("getSpawner")) {
             return Arrays.asList(
                     "ZOMBIE",
-                    "SKELETON"
+                    "SKELETON",
+                    "WOOD",
+                    "INGOT"
             );
         }
         return List.of();

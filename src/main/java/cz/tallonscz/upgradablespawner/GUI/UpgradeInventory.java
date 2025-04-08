@@ -57,6 +57,8 @@ public class UpgradeInventory {
             List<Component> list = new ArrayList<>();
             list.add(Component.text(""));
             list.add(Component.text("Inventory size is on maximum size.").color(TextColor.color(255, 255, 255)).decoration(TextDecoration.ITALIC, false));
+            list.add(Component.text("You can put chest on South site,").color(TextColor.color(255, 255, 255)).decoration(TextDecoration.ITALIC, false));
+            list.add(Component.text("and the Spawner put item there.").color(TextColor.color(255, 255, 255)).decoration(TextDecoration.ITALIC, false));
 
 
             meta.lore(list);
@@ -84,6 +86,20 @@ public class UpgradeInventory {
         ItemStack item = new ItemStack(Material.CHEST);
         ItemMeta meta = item.getItemMeta();
 
+        if(i >= 5){
+            meta.displayName(Component.text("AMOUNT "+i).color(TextColor.color(255, 255, 255)).decoration(TextDecoration.ITALIC, false));
+
+            List<Component> list = new ArrayList<>();
+            list.add(Component.text(""));
+            list.add(Component.text("Amount is on maximum lvl.").color(TextColor.color(255, 255, 255)).decoration(TextDecoration.ITALIC, false));
+
+
+            meta.lore(list);
+
+            item.setItemMeta(meta);
+            return item;
+        }
+
         meta.displayName(Component.text("AMOUNT "+i).color(TextColor.color(255, 255, 255)).decoration(TextDecoration.ITALIC, false));
 
         List<Component> list = new ArrayList<>();
@@ -101,6 +117,23 @@ public class UpgradeInventory {
         ItemStack item = new ItemStack(Material.CHEST);
         ItemMeta meta = item.getItemMeta();
         int[] position = {0,6,5,4,3,2,1};
+
+        if(i <= 5){
+            meta.displayName(Component.text("Time "+position[i/5]).color(TextColor.color(255, 255, 255)).decoration(TextDecoration.ITALIC, false));
+
+            List<Component> list = new ArrayList<>();
+            list.add(Component.text(""));
+            list.add(Component.text("Time is on maximum lvl.").color(TextColor.color(255, 255, 255)).decoration(TextDecoration.ITALIC, false));
+
+
+            meta.lore(list);
+
+            item.setItemMeta(meta);
+            return item;
+        }
+
+
+
         meta.displayName(Component.text("Time "+position[i/5]).color(TextColor.color(255, 255, 255)).decoration(TextDecoration.ITALIC, false));
         List<Component> list = new ArrayList<>();
         list.add(Component.text(""));

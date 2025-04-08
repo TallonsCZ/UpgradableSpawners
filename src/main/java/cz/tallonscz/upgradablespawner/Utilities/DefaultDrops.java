@@ -29,15 +29,25 @@ public class DefaultDrops {
         return drops;
     }
 
-    public static Collection<ItemStack> getDefaultDropsCustom(String type){
+    public static Collection<ItemStack> getDefaultDrops(String type){
         List<ItemStack> drops = new ArrayList<>();
 
         switch (type) {
             case "WOOD":
                 drops.add(new ItemStack(Material.OAK_LOG, 1));
+                drops.add(new ItemStack(Material.ACACIA_LOG, 1));
+                drops.add(new ItemStack(Material.BIRCH_LOG, 1));
+                drops.add(new ItemStack(Material.CHERRY_LOG, 1));
+                drops.add(new ItemStack(Material.DARK_OAK_LOG, 1));
+                drops.add(new ItemStack(Material.JUNGLE_LOG, 1));
+                drops.add(new ItemStack(Material.MANGROVE_LOG, 1));
+                drops.add(new ItemStack(Material.SPRUCE_LOG, 1));
                 break;
             case "INGOT":
                 drops.add(new ItemStack(Material.RAW_COPPER, 1));
+                drops.add(new ItemStack(Material.RAW_IRON, 1));
+                drops.add(new ItemStack(Material.REDSTONE, 4));
+                drops.add(new ItemStack(Material.RAW_GOLD, 1));
             default:
                 break;
         }

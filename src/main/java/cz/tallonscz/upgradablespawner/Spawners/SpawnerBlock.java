@@ -30,7 +30,12 @@ public class SpawnerBlock {
         BlockState state = block.getState();
         if(state instanceof CreatureSpawner spawner){
             try {
-                spawner.setSpawnedType(EntityType.valueOf(SpawnerItem.getStringPersistantDataFromItem(meta, SpawnerItemKeys.UPGRADESPAWNERS_ITEM_TYPE)));
+                EntityType entityType = parseEntityType(SpawnerItem.getStringPersistantDataFromItem(meta, SpawnerItemKeys.UPGRADESPAWNERS_ITEM_TYPE));
+                if(entityType != null){
+                    spawner.setSpawnedType(entityType);
+                } else{
+                    spawner.setSpawnedType(EntityType.CHEST_BOAT);
+                }
                 setPersistantData(SpawnerKeys.UPGRADESPAWNERS_SPAWNER_SPAWNERS, spawner, true);
                 setPersistantData(SpawnerKeys.UPGRADESPAWNERS_SPAWNER_TYPE, spawner, SpawnerItem.getStringPersistantDataFromItem(meta, SpawnerItemKeys.UPGRADESPAWNERS_ITEM_TYPE));
                 setPersistantData(SpawnerKeys.UPGRADESPAWNERS_SPAWNER_LEVEL, spawner, SpawnerItem.getIntPersistantDataFromItem(meta, SpawnerItemKeys.UPGRADESPAWNERS_ITEM_LEVEL));
@@ -43,7 +48,6 @@ public class SpawnerBlock {
                 int delay = spawner.getPersistentDataContainer().get(SpawnerKeys.UPGRADESPAWNERS_SPAWNER_TIME, PersistentDataType.INTEGER) * 20;
 
                 spawner.update();
-
                 spawner.setMinSpawnDelay(delay);
                 spawner.setMaxSpawnDelay(delay);
                 spawner.setDelay(delay);
@@ -54,8 +58,6 @@ public class SpawnerBlock {
             }
         }
     }
-
-
 
     private static void setPersistantData(NamespacedKey key, CreatureSpawner spawner, int number){
         PersistentDataContainer container = spawner.getPersistentDataContainer();
@@ -80,7 +82,7 @@ public class SpawnerBlock {
         double upgradeCost = Economy.upgradeCostCalculation(currentAmount);
         double roundedCost = Math.round(upgradeCost * 100.0) / 100.0;
         if (!Economy.removeMoneyFromPlayer(player, roundedCost)){
-            return 1;
+            return 2;
         }
         container.set(SpawnerKeys.UPGRADESPAWNERS_SPAWNER_AMOUNT, PersistentDataType.INTEGER, newAmount);
         spawner.update();
@@ -98,7 +100,7 @@ public class SpawnerBlock {
         double upgradeCost = Economy.upgradeCostCalculation(position[currentTime/5]);
         double roundedCost = Math.round(upgradeCost * 100.0) / 100.0;
         if (!Economy.removeMoneyFromPlayer(player, roundedCost)){
-            return 1;
+            return 2;
         }
         container.set(SpawnerKeys.UPGRADESPAWNERS_SPAWNER_TIME, PersistentDataType.INTEGER, newTime);
         spawner.setDelay(newTime*20);
@@ -118,7 +120,7 @@ public class SpawnerBlock {
         double upgradeCost = Economy.upgradeCostCalculationStorage(currentSize/9);
         double roundedCost = Math.round(upgradeCost * 100.0) / 100.0;
         if (!Economy.removeMoneyFromPlayer(player, roundedCost)){
-            return 1;
+            return 2;
         }
         Inventory newInventory = Bukkit.createInventory(null, newSize, Component.text("Spawner Inventory"));
         Location spawnerLocation = spawner.getLocation();
@@ -137,5 +139,13 @@ public class SpawnerBlock {
         container.set(SpawnerKeys.UPGRADESPAWNERS_SPAWNER_STORAGE, PersistentDataType.INTEGER, newSize);
         spawner.update();
         return 0;
+    }
+
+    public static EntityType parseEntityType(String input) {
+        try {
+            return EntityType.valueOf(input.toUpperCase());
+        } catch (IllegalArgumentException e) {
+            return null;
+        }
     }
 }

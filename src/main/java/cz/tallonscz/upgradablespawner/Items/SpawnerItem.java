@@ -2,6 +2,7 @@ package cz.tallonscz.upgradablespawner.Items;
 
 import cz.tallonscz.upgradablespawner.Keys.SpawnerItemKeys;
 import cz.tallonscz.upgradablespawner.Keys.SpawnerKeys;
+import cz.tallonscz.upgradablespawner.Spawners.SpawnerBlock;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.format.TextColor;
@@ -45,17 +46,33 @@ public class SpawnerItem {
         return item;
     }
 
+    //CREATING DEFAULT SPAWNER ITEM
+    public ItemStack getSpawner(String type, int amount){
+        item.setAmount(amount);
+        ItemMeta meta = item.getItemMeta();
+
+        meta.displayName(Component.text(type + " SPAWNER").color(NamedTextColor.GOLD));
+        setPersistantData(meta, SpawnerItemKeys.UPGRADESPAWNERS_ITEM_SPAWNERS, true);
+        setPersistantData(meta, SpawnerItemKeys.UPGRADESPAWNERS_ITEM_LEVEL, 0);
+        setPersistantData(meta, SpawnerItemKeys.UPGRADESPAWNERS_ITEM_TYPE, type);
+        setPersistantData(meta, SpawnerItemKeys.UPGRADESPAWNERS_ITEM_STORAGE, 9);
+        setPersistantData(meta, SpawnerItemKeys.UPGRADESPAWNERS_ITEM_TIME, 30);
+        setPersistantData(meta, SpawnerItemKeys.UPGRADESPAWNERS_ITEM_AMOUNT, 1);
+        setPersistantData(meta, SpawnerItemKeys.UPGRADESPAWNERS_ITEM_PLAYER, false);
+        item.setItemMeta(meta);
+        return item;
+    }
+
     //CREATING SPAWNER ITEM FROM BLOCK
     public ItemStack getSpawner(Block block){
         item.setAmount(1);
         ItemMeta meta = item.getItemMeta();
-        EntityType entityType = EntityType.valueOf(getPersistantDataStringFromBlock(block, SpawnerKeys.UPGRADESPAWNERS_SPAWNER_TYPE));
-
-        meta.displayName(Component.text(entityType.name() + " SPAWNER").color(NamedTextColor.GOLD));
+        String type = getPersistantDataStringFromBlock(block, SpawnerKeys.UPGRADESPAWNERS_SPAWNER_TYPE);
+        meta.displayName(Component.text(type + " Spawner").color(NamedTextColor.GOLD));
 
         setPersistantData(meta, SpawnerItemKeys.UPGRADESPAWNERS_ITEM_SPAWNERS, true);
         setPersistantData(meta, SpawnerItemKeys.UPGRADESPAWNERS_ITEM_LEVEL, getPersistantDataIntFromBlock(block, SpawnerKeys.UPGRADESPAWNERS_SPAWNER_LEVEL));
-        setPersistantData(meta, SpawnerItemKeys.UPGRADESPAWNERS_ITEM_TYPE, entityType.name());
+        setPersistantData(meta, SpawnerItemKeys.UPGRADESPAWNERS_ITEM_TYPE, type);
         setPersistantData(meta, SpawnerItemKeys.UPGRADESPAWNERS_ITEM_STORAGE, getPersistantDataIntFromBlock(block, SpawnerKeys.UPGRADESPAWNERS_SPAWNER_STORAGE));
         setPersistantData(meta, SpawnerItemKeys.UPGRADESPAWNERS_ITEM_AMOUNT, getPersistantDataIntFromBlock(block, SpawnerKeys.UPGRADESPAWNERS_SPAWNER_AMOUNT));
         setPersistantData(meta, SpawnerItemKeys.UPGRADESPAWNERS_ITEM_TIME, getPersistantDataIntFromBlock(block, SpawnerKeys.UPGRADESPAWNERS_SPAWNER_TIME));
@@ -118,7 +135,7 @@ public class SpawnerItem {
         return -1;
     }
 
-    private String getPersistantDataStringFromBlock(Block block, NamespacedKey key){
+    public static String getPersistantDataStringFromBlock(Block block, NamespacedKey key){
         BlockState state = block.getState();
         if(state instanceof CreatureSpawner spawner){
             PersistentDataContainer container = spawner.getPersistentDataContainer();

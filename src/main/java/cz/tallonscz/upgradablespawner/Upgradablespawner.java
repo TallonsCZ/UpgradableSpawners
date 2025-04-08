@@ -38,6 +38,12 @@ public final class Upgradablespawner extends JavaPlugin {
             saveResource("mysql.yml", false);
         }
 
+        File lang = new File(getDataFolder(), "en_lang.yml");
+
+        if(!lang.exists()){
+            saveResource("en_lang.yml", false);
+        }
+
         getCommand("UpgradeSpawner").setExecutor(new GlobalCommand());
         ListenerRegister.registerListener(this);
 
